@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sunculture_api",
+    "password": "3EDdDngGWVStyM2fnakDDsgj6ctQ3t=",
+    "database": "sunculture_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "sunculture_api",
+    "password": "3EDdDngGWVStyM2fnakDDsgj6ctQ3t=",
+    "database": "sunculture_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sunculture_api",
+    "password": "3EDdDngGWVStyM2fnakDDsgj6ctQ3t=",
+    "database": "sunculture_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
