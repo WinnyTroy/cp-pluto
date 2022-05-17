@@ -1,3 +1,4 @@
+require('dotenv').config()
 const models = require('../models/index');
 const { v4: uuidv4 } = require('uuid');
 const request = require('request');
@@ -26,7 +27,7 @@ exports.check = async (req) => {
                         }
                     }).then(async res => {
                         console.log(res)
-                        sms.sendSMS({ msisdn: req.body.query, message: `Your SunCulture Activation code is: ${code}` })
+                        sms.sendSMS({ msisdn: customer[0].phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(res)
                     }, async err => {
                         console.log(err)
@@ -37,11 +38,11 @@ exports.check = async (req) => {
                         phoneNumber: result.phoneNumber,
                         nationalID: result.nationalID,
                         code: code,
-                        expiry: "10 minutes",
+                        expiry: process.env.JWT_EXPIRATION_TIME,
                         status: "0"
                     }).then(async record => {
                         console.log(record)
-                        sms.sendSMS({ msisdn: req.body.query, message: `Your SunCulture Activation code is: ${code}` })
+                        sms.sendSMS({ msisdn: customer[0].phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(record)
                     }, async err => {
                         console.error(err)
