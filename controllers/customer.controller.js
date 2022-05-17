@@ -17,6 +17,22 @@ exports.check = async (req, res) => {
     }
 }
 
+exports.fetch = async (req, res, next) => {
+    try {
+        await service.customer.fetchCustomersAccountDetails(req, res, next).then(async results => {
+
+            return helpers.response.successResponseWithData(res, 'success', results);
+
+        }, async error => {
+            console.error(error)
+            return helpers.response.handleExceptionResponse(res, error);
+        })
+    } catch (e) {
+        console.error(e)
+        return helpers.response.ErrorResponse(res, "Request failed. Please try again after sometime.")
+    }
+}
+
 exports.verify = async (req, res) => {
     try {
         await service.customer.fetchOtpDetail(req, res).then(async results => {

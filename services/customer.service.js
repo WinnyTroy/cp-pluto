@@ -11,8 +11,7 @@ let _this = this
 exports.check = async (req) => {
     return new Promise(async (resolve, reject) => {
         let code = await helpers.utility.randomNumber(4)
-        _this.queryDetails(req.body.query).then(async result => {
-            console.log(`-------------${JSON.stringify(result)}`)
+        _this.queryCustomerInfo(req.body.query).then(async result => {
             await models.otp.findAll({
                 where: {
                     phoneNumber: result.phoneNumber,
@@ -29,7 +28,7 @@ exports.check = async (req) => {
                         }
                     }).then(async res => {
                         console.log(res)
-                        sms.sendSMS({ msisdn: customer[0].phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
+                        sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(res)
                     }, async err => {
                         console.log(err)
@@ -44,7 +43,7 @@ exports.check = async (req) => {
                         status: "0"
                     }).then(async record => {
                         console.log(record)
-                        sms.sendSMS({ msisdn: customer[0].phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
+                        sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(record)
                     }, async err => {
                         console.error(err)
@@ -60,11 +59,11 @@ exports.check = async (req) => {
     })
 }
 
-exports.queryDetails = async (value) => {
+exports.queryCustomerInfo = async (value) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'GET',
-            'url': `https://api.sunculture.io/prod/customersAccountDetails?q=${value}`,
+            'url': `https://api.sunculture.io/prod/customers/${value}`,
             'headers': {
                 'x-api-key': 'rDrA9S5WL04qJ9RtPKrBe2CGmBUD9kGh2rZ3n8Ks',
                 'Authorization': 'Basic Og=='
@@ -77,8 +76,35 @@ exports.queryDetails = async (value) => {
             } else {
                 let responseBody = JSON.parse(response.body)
                 console.info(`[Data from api.sunculture]: ${JSON.stringify(responseBody)}`)
+                if (responseBody.data.length > 0) {
+                    resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber })
+                } else {
+                    reject("No Account info found")
+                }
+            }
+        });
+    })
+}
+
+exports.fetchCustomersAccountDetails = async (req, res, next) => {
+    return new Promise(async (resolve, reject) => {
+        var options = {
+            'method': 'GET',
+            'url': `https://api.sunculture.io/prod/customersAccountDetails?q=${res.JWTDecodedData.nationalID}`,
+            'headers': {
+                'x-api-key': 'rDrA9S5WL04qJ9RtPKrBe2CGmBUD9kGh2rZ3n8Ks',
+                'Authorization': 'Basic Og=='
+            }
+        };
+        await request(options, async (error, response) => {
+            if (error) {
+                console.error(error)
+                reject(`Request failed. Something Went wrong Please try again later`)
+            } else {
+                let responseBody = JSON.parse(response.body)
+                console.info(`[Data from api.sunculture]: ${JSON.stringify(responseBody)}`)
                 if (responseBody.status === true) {
-                    resolve({ phoneNumber: responseBody.data.phoneNumber, nationalID: responseBody.data.nationalID })
+                    resolve(responseBody)
                 } else {
                     reject(responseBody.err)
                 }
@@ -90,10 +116,9 @@ exports.fetchOtpDetail = async (req, res) => {
     return new Promise(async (resolve, reject) => {
         await models.otp.findAll({
             where: {
-                [Op.or]: [{ phoneNumber: req.body.query }, { nationalID: req.body.query }]
+                nationalID: req.body.query
             }
         }).then(async customer => {
-            //console.log(customer)
             resolve(customer)
         }, async err => {
             console.error(err)

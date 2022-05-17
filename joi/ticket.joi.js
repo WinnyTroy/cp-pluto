@@ -3,7 +3,8 @@ const Joi = require('joi');
 module.exports = {
     schemas: {
         create: Joi.object().keys({
-            identificationNumber: Joi.string().required(),
+            customerName: Joi.string().required(),
+            groupId: Joi.number().required(),
             subject: Joi.string().required(),
             description: Joi.string().required()
         })

@@ -17,14 +17,14 @@ exports.create = async (req, res, next) => {
                 "subject": req.body.subject,
                 "priority": 1,
                 "status": 2,
-                "unique_external_id": req.body.identificationNumber,
-                "group_id": 2043001590144,
+                "unique_external_id": res.JWTDecodedData.nationalID,
+                "group_id": req.body.groupId,
                 "name": "portal",
                 "phone": res.JWTDecodedData.phoneNumber,
                 "custom_fields": {
-                    "cf_id_number": req.body.identificationNumber,
+                    "cf_id_number": res.JWTDecodedData.nationalID,
                     "cf_phone_number": res.JWTDecodedData.phoneNumber,
-                    "cf_customer_name": "mYName"
+                    "cf_customer_name": req.body.customerName
                 }
             })
         };
@@ -33,6 +33,7 @@ exports.create = async (req, res, next) => {
                 console.error(error)
                 reject(error)
             } else {
+                console.info(`response from freshdesk: ${response.body}`)
                 resolve(response.body)
             }
         });
