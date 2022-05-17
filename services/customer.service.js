@@ -12,18 +12,20 @@ exports.check = async (req) => {
     return new Promise(async (resolve, reject) => {
         let code = await helpers.utility.randomNumber(4)
         _this.queryDetails(req.body.query).then(async result => {
+            console.log(`-------------${JSON.stringify(result)}`)
             await models.otp.findAll({
                 where: {
-                    [Op.or]: [{ phoneNumber: result.phoneNumber }, { nationalID: result.nationalID }]
+                    phoneNumber: result.phoneNumber,
+                    nationalID: result.nationalID
                 }
             }).then(async customer => {
                 if (parseInt(customer.length) > 0) {
-                    await models.otp.update(
-                        {
-                            code: code
-                        }, {
+                    await models.otp.update({
+                        code: code
+                    }, {
                         where: {
-                            [Op.or]: [{ phoneNumber: result.phoneNumber }, { nationalID: result.nationalID }]
+                            phoneNumber: result.phoneNumber,
+                            nationalID: result.nationalID
                         }
                     }).then(async res => {
                         console.log(res)
