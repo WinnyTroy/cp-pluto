@@ -3,17 +3,16 @@ const customer = require('./customer.service')
 const request = require('request');
 let _this = this
 
-
 exports.verify = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         await customer.fetchCustomersAccountDetails(req, res, next).then(async response => {
             let data = response.data
             console.info(JSON.stringify(data))
-
             if (data.deviceId === req.body.deviceId) {
-                resolve(data.deviceId)
+                resolve("Success. Your Device has been verified successfully")
             } else {
                 _this.issue()
+                resolve("Failed. We are unable to verify your device")
             }
         }, async err => {
             console.error(err)
@@ -27,10 +26,7 @@ exports.issue = async () => {
         var options = {
             'method': 'POST',
             'url': process.env.POST_ATLASSIAN_ISSUE,
-            'headers': {
-                'Authorization': `Basic ${process.env.BEARER_ATLASSIAN}`,
-                'Content-Type': 'application/json'
-            },
+            'headers': { 'Authorization': `Basic ${process.env.BEARER_ATLASSIAN}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 "fields": {
                     "project": {
