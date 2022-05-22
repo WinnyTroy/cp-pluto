@@ -2,15 +2,14 @@ require('dotenv').config()
 const models = require('../models/index');
 const { v4: uuidv4 } = require('uuid');
 const request = require('request');
-const Sequelize = require('sequelize');
 const sms = require('./sms.service')
-const Op = Sequelize.Op;
 const helpers = require('../helpers/index')
 let _this = this
 
 exports.check = async (req) => {
     return new Promise(async (resolve, reject) => {
         let code = await helpers.utility.randomNumber(4)
+        console.info(`[OTP GENERATED]:  code is ${code}`)
         _this.queryCustomerInfo(req.body.query).then(async result => {
             await models.otp.findAll({
                 where: {
@@ -86,7 +85,7 @@ exports.queryCustomerInfo = async (value) => {
     })
 }
 
-exports.fetchCustomersAccountDetails = async (req, res, next) => {
+exports.fetchCustomersAccountDetails = async (req, res) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'GET',
@@ -112,7 +111,7 @@ exports.fetchCustomersAccountDetails = async (req, res, next) => {
         });
     })
 }
-exports.fetchOtpDetail = async (req, res) => {
+exports.fetchOtpDetail = async (req) => {
     return new Promise(async (resolve, reject) => {
         await models.otp.findAll({
             where: {

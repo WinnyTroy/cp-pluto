@@ -58,3 +58,9 @@ sudo docker network create sunculture.network
 ```bash
 sudo docker-compose up -d
 ```
+
+5. Rebuild the docker container
+
+```bash
+sudo docker-compose up -d --no-deps --build
+```
