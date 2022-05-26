@@ -62,10 +62,10 @@ exports.queryCustomerInfo = async (value) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'GET',
-            'url': `https://api.sunculture.io/prod/customers/${value}`,
+            'url': `${process.env.API_SUNCULTURE_GET_CUSTOMERS}${value}`,
             'headers': {
-                'x-api-key': 'rDrA9S5WL04qJ9RtPKrBe2CGmBUD9kGh2rZ3n8Ks',
-                'Authorization': 'Basic Og=='
+                'x-api-key': process.env.API_SUNCULTURE_X_API_KEY,
+                'Authorization': `Basic ${process.env.API_SUNCULTURE_BASIC_AUTH}`
             }
         };
         await request(options, async (error, response) => {
@@ -89,10 +89,10 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'GET',
-            'url': `https://api.sunculture.io/prod/customersAccountDetails?q=${res.JWTDecodedData.nationalID}`,
+            'url': `${process.env.API_SUNCULTURE_GET_CUSTOMER_DETAILS}${res.JWTDecodedData.nationalID}`,
             'headers': {
-                'x-api-key': 'rDrA9S5WL04qJ9RtPKrBe2CGmBUD9kGh2rZ3n8Ks',
-                'Authorization': 'Basic Og=='
+                'x-api-key': process.env.API_SUNCULTURE_X_API_KEY,
+                'Authorization': `Basic ${process.env.API_SUNCULTURE_BASIC_AUTH}`
             }
         };
         await request(options, async (error, response) => {
