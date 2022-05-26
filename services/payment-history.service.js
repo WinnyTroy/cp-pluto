@@ -4,7 +4,8 @@ exports.getPaymentHistory= async (value) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'GET',
-            'url': `https://api.sunculture.io/stage/paymentByAccountRef/${value}`,
+            'url':`${process.env.GET_PAYMENTS}/${value}`
+
         };
         await request(options, async (error, response) => {
             if (error) {
