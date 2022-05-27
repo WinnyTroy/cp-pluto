@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-
+const helpers = require('./helpers/index')
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -23,10 +23,10 @@ app.use('/', require('./routes/index'));
 app.use('/api/v1', require('./routes/users'));
 app.use('/api/v1', require('./routes/tickets'))
 app.use('/api/v1', require('./routes/devices'))
-app.use('/api/v1' ,require('./routes/payments'))
+app.use('/api/v1', require('./routes/payments'))
 
 app.use(function (req, res, next) {
-  next(createError(404));
+  return helpers.response.notFoundResponse(res, "Api resource not found")
 });
 
 // error handler
