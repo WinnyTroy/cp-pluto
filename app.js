@@ -23,7 +23,7 @@ app.use('/', require('./routes/index'));
 app.use('/api/v1', require('./routes/users'));
 app.use('/api/v1', require('./routes/tickets'))
 app.use('/api/v1', require('./routes/devices'))
-
+app.use('/api/v1' ,require('./routes/payments'))
 
 app.use(function (req, res, next) {
   next(createError(404));
