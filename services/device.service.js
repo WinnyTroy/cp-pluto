@@ -1,17 +1,28 @@
 require('dotenv').config()
 const customer = require('./customer.service')
 const request = require('request');
+const log = require('./log.service')
 let _this = this
 
 exports.verify = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         await customer.fetchCustomersAccountDetails(req, res, next).then(async response => {
             let data = response.data
-            console.info(JSON.stringify(data))
+
+            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+            let json = {
+                otpId: res.JWTDecodedData.otpId, requestId: res.JWTDecodedData.id, nationalID: res.JWTDecodedData.nationalID, action: 'VERIFY DEVICE',
+                ip: ip, userAgent: req.headers["user-agent"], resourcePath: req.url, method: req.method
+            }
+
             if (data.deviceId === req.body.deviceId) {
+                json['desc'] = `Device for ${res.JWTDecodedData.nationalID} has been verified successful`
+                log.create(json)
                 resolve("Success. Your Device has been verified successfully")
             } else {
                 _this.issue()
+                json['desc'] = `We are unable to verify your device for ${res.JWTDecodedData.nationalID}`
+                log.create(json)
                 resolve("Failed. We are unable to verify your device")
             }
         }, async err => {
