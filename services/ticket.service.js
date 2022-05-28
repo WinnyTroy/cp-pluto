@@ -1,11 +1,10 @@
 require('dotenv').config()
 const request = require('request');
-
+const log = require('./log.service')
 
 exports.create = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         let nationalID = res.JWTDecodedData.nationalID
-        console.log(`National ID is here: ${nationalID}`)
         var options = {
             'method': 'POST',
             'url': process.env.POST_TICKETS,
@@ -31,11 +30,20 @@ exports.create = async (req, res, next) => {
             })
         };
         await request(options, async (error, response) => {
+            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+            let json = {
+                otpId: res.JWTDecodedData.otpId, requestId: res.JWTDecodedData.id, nationalID: res.JWTDecodedData.nationalID, action: 'RAISE TICKETS',
+                ip: ip, userAgent: req.headers["user-agent"], resourcePath: req.url, method: req.method
+            }
             if (error) {
                 console.error(error)
+                json['desc'] = `Something went wrong while raising the ticket for ${res.JWTDecodedData.nationalID} `
+                log.create(json)
                 reject(error)
             } else {
                 console.info(`response from freshdesk: ${response.body}`)
+                json['desc'] = `Customer with ID: ${res.JWTDecodedData.nationalID} has raised the ticket successful`
+                log.create(json)
                 resolve(response.body)
             }
         });

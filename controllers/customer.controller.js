@@ -40,7 +40,8 @@ exports.verify = async (req, res) => {
             if (parseInt(results.length) > 0) {
                 let result = results[0]
                 if (parseInt(result.code) === parseInt(req.body.code)) {
-                    let payload = { phoneNumber: result.phoneNumber, nationalID: result.nationalID, code: result.nationalID }
+                    console.log(`[Verify OTP]: ${JSON.stringify(result)}`)
+                    let payload = { phoneNumber: result.phoneNumber, nationalID: result.nationalID, code: result.nationalID, otpId: result.otpId, id: result.id }
                     var token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
                         expiresIn: process.env.JWT_EXPIRATION_TIME
                     });
