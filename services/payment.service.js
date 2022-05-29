@@ -6,7 +6,7 @@ const log = require('./log.service')
 exports.getPaymentHistory = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         var options = {
-            'method': 'GE',
+            'method': 'GET',
             'url': `${process.env.API_GET_PAYMENTS}${res.JWTDecodedData.nationalID}`
 
         };
