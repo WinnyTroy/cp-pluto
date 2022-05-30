@@ -7,8 +7,11 @@ exports.getPaymentHistory = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'GET',
-            'url': `${process.env.API_GET_PAYMENTS}${res.JWTDecodedData.nationalID}`
-
+            'url': `${process.env.API_GET_PAYMENTS}${res.JWTDecodedData.nationalID}`,
+            'headers': {
+                'x-api-key': process.env.API_SUNCULTURE_X_API_KEY,
+                'Authorization': `Basic ${process.env.API_SUNCULTURE_BASIC_AUTH}`
+            }
         };
         await request(options, async (error, response) => {
             var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
