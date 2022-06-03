@@ -4,5 +4,6 @@ module.exports = {
     ticket: require('./ticket.service'),
     device: require('./device.service'),
     payment: require('./payment.service'),
-    log: require('./log.service')
+    log: require('./log.service'),
+    auth: require('./auth.service')
 }

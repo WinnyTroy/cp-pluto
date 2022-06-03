@@ -24,6 +24,7 @@ app.use('/api/v1', require('./routes/users'));
 app.use('/api/v1', require('./routes/tickets'))
 app.use('/api/v1', require('./routes/devices'))
 app.use('/api/v1', require('./routes/payments'))
+app.use('/api/v1', require('./routes/auth'))
 
 app.use(function (req, res, next) {
   return helpers.response.notFoundResponse(res, "Api resource not found")
