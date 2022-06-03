@@ -50,9 +50,11 @@ exports.check = async (req) => {
                     })
                 }
             }, async err => {
+                console.error(err)
                 reject(err)
             })
         }, async err => {
+            console.error(err)
             reject(err)
         })
     })

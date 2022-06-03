@@ -16,9 +16,9 @@ jobs:
 
       - name: Deploy to my EC2 instance
         uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          SOURCE: "./"
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: "/home/ubuntu/customer_portal_api"
+        with:
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "./"
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          target: "/home/ubuntu/customer_portal_api"
