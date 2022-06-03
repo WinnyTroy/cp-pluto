@@ -20,7 +20,7 @@ exports.verify = async (req, res, next) => {
                 log.create(json)
                 resolve("Success. Your Device has been verified successfully")
             } else {
-                _this.issue()
+                _this.issue(res.JWTDecodedData.nationalID, req.body.deviceId)
                 json['desc'] = `We are unable to verify your device for ${res.JWTDecodedData.nationalID}`
                 log.create(json)
                 resolve("Failed. We are unable to verify your device")
@@ -32,7 +32,7 @@ exports.verify = async (req, res, next) => {
     })
 }
 
-exports.issue = async () => {
+exports.issue = async (nationalID, deviceId) => {
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'POST',
@@ -43,7 +43,7 @@ exports.issue = async () => {
                     "project": {
                         "key": "IT"
                     },
-                    "summary": "Customer Portal Jira Integration Test",
+                    "summary": "Device confirmation failure from CP",
                     "issuetype": {
                         "name": "Task"
                     },
@@ -56,12 +56,15 @@ exports.issue = async () => {
                                 "content": [
                                     {
                                         "type": "text",
-                                        "text": "Customer Portal Jira Integration Test"
+                                        "text": `User with NationalID ${nationalID} experienced device confirmation failure for device id ${deviceId}`
                                     }
                                 ]
                             }
                         ]
-                    }
+                    },
+                    "labels": [
+                        "New"
+                    ],
                 }
             })
 
