@@ -56,7 +56,7 @@ exports.issue = async (nationalID, deviceId) => {
                                 "content": [
                                     {
                                         "type": "text",
-                                        "text": `User with NationalID ${nationalID} experienced device confirmation failure for device id ${deviceId}`
+                                        "text": `User with National id ${nationalID} experienced device confirmation failure for device id ${deviceId}`
                                     }
                                 ]
                             }
