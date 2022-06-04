@@ -78,7 +78,7 @@ exports.queryCustomerInfo = async (value) => {
                 let responseBody = JSON.parse(response.body)
                 console.info(`[Data from api.sunculture]: ${JSON.stringify(responseBody)}`)
                 if (responseBody.data.length > 0) {
-                    resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber })
+                    resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber, status: responseBody.data[0].status })
                 } else {
                     reject("No Account info found")
                 }
@@ -105,7 +105,14 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
                 let responseBody = JSON.parse(response.body)
                 console.info(`[Data from api.sunculture]: ${JSON.stringify(responseBody)}`)
                 if (responseBody.status === true) {
-                    resolve(responseBody)
+                    await _this.queryCustomerInfo(res.JWTDecodedData.nationalID).then(async info => {
+                        console.info(info)
+                        responseBody.data['status'] = info.status
+                        resolve(responseBody)
+                    }, async err => {
+                        console.error(err)
+                        reject(err)
+                    })
                 } else {
                     reject(responseBody.err)
                 }
