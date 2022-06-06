@@ -1,0 +1,21 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cache-manager-ioredis": "^2.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express-rate-limit": "^5.2.3",
+    "fast-gateway": "^2.6.1",
+    "helmet": "^4.2.0",
+    "request-ip": "^2.1.3"
+  }
+}

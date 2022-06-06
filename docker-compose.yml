@@ -4,9 +4,20 @@ networks:
     external:
       name: sunculture.network
 services:
+  ms-sunculture-gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    image: ms-sunculture-gateway
+    container_name: ms-sunculture-gateway
+    restart: unless-stopped
+    networks:
+      - proxynet
+    ports:
+      - "3302:3302"
   ms-sunculture-api:
     build:
-      context: ./
+      context: ./api
       dockerfile: Dockerfile
     image: ms-sunculture-api
     container_name: ms-sunculture-api
@@ -32,39 +43,39 @@ services:
       MYSQL_DATABASE: "sunculture_db"
       MYSQL_USER: "sunculture_api"
       MYSQL_PASSWORD: "3EDdDngGWVStyM2fnakDDsgj6ctQ3t="
-  ms-sunculture-elasticsearch:
-    container_name: ms-sunculture-elasticsearch
-    image: elasticsearch:7.8.1
-    environment:
-      - xpack.security.enabled=false
-      - "discovery.type=single-node"
-    networks:
-      - proxynet
-    ports:
-      - 9200:9200
-  ms-sunculture-kibana:
-    container_name: ms-sunculture-kibana
-    image: kibana:7.8.1
-    environment:
-      - ELASTICSEARCH_HOSTS=http://ms-sunculture-elasticsearch:9200
-    networks:
-      - proxynet
-    depends_on:
-      - ms-sunculture-elasticsearch
-    ports:
-      - 5601:5601
-  ms-sunculture-filebeat:
-    container_name: ms-sunculture-filebeat
-    image: docker.elastic.co/beats/filebeat:8.2.2
-    user: root
-    command: --strict.perms=false
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /var/lib/docker/containers:/usr/share/dockerlogs/data:ro
-      #- $(pwd)/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-      #- /var/lib/docker:/var/lib/docker:ro
-    networks:
-      - proxynet
-    depends_on:
-      - ms-sunculture-elasticsearch
-      - ms-sunculture-kibana
+  # ms-sunculture-elasticsearch:
+  #   container_name: ms-sunculture-elasticsearch
+  #   image: elasticsearch:7.8.1
+  #   environment:
+  #     - xpack.security.enabled=false
+  #     - "discovery.type=single-node"
+  #   networks:
+  #     - proxynet
+  #   ports:
+  #     - 9200:9200
+  # ms-sunculture-kibana:
+  #   container_name: ms-sunculture-kibana
+  #   image: kibana:7.8.1
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://ms-sunculture-elasticsearch:9200
+  #   networks:
+  #     - proxynet
+  #   depends_on:
+  #     - ms-sunculture-elasticsearch
+  #   ports:
+  #     - 5601:5601
+  # ms-sunculture-filebeat:
+  #   container_name: ms-sunculture-filebeat
+  #   image: docker.elastic.co/beats/filebeat:8.2.2
+  #   user: root
+  #   command: --strict.perms=false
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - /var/lib/docker/containers:/usr/share/dockerlogs/data:ro
+  #     #- $(pwd)/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+  #     #- /var/lib/docker:/var/lib/docker:ro
+  #   networks:
+  #     - proxynet
+  #   depends_on:
+  #     - ms-sunculture-elasticsearch
+  #     - ms-sunculture-kibana
