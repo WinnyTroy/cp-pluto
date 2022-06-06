@@ -1,0 +1,13 @@
+{
+    "name": "ms-bidmania-gateway",
+    "instances": 1,
+    "script": "./index.js",
+    "exec_mode": "cluster",
+    "kill_timeout": 1000,
+    "watch": true,
+    "ignore_watch": ["[/\\]./", "node_modules", "public", ".vscode", ".git"],
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
+  
