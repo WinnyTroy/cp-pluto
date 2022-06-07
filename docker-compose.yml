@@ -4,17 +4,17 @@ networks:
     external:
       name: sunculture.network
 services:
-  ms-sunculture-gateway:
-    build:
-      context: ./gateway
-      dockerfile: Dockerfile
-    image: ms-sunculture-gateway
-    container_name: ms-sunculture-gateway
-    restart: unless-stopped
-    networks:
-      - proxynet
-    ports:
-      - "3302:3302"
+  # ms-sunculture-gateway:
+  #   build:
+  #     context: ./gateway
+  #     dockerfile: Dockerfile
+  #   image: ms-sunculture-gateway
+  #   container_name: ms-sunculture-gateway
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxynet
+  #   ports:
+  #     - "3302:3302"
   ms-sunculture-api:
     build:
       context: ./api

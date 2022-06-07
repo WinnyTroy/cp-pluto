@@ -27,7 +27,7 @@ exports.check = async (req) => {
                         }
                     }).then(async res => {
                         console.log(res)
-                        //sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
+                        sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(res)
                     }, async err => {
                         console.log(err)
@@ -42,7 +42,7 @@ exports.check = async (req) => {
                         status: "0"
                     }).then(async record => {
                         console.log(record)
-                        //sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
+                        sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(record)
                     }, async err => {
                         console.error(err)
