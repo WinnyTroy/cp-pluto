@@ -79,3 +79,18 @@ services:
   #   depends_on:
   #     - ms-sunculture-elasticsearch
   #     - ms-sunculture-kibana
+
+  # APACHE WEB SERVER
+  ms-sunculture-nginx:
+    image: nginx:alpine
+    container_name: ms-sunculture-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - proxynet
