@@ -65,3 +65,7 @@ sudo docker-compose up -d
 ```bash
 sudo docker-compose up -d --no-deps --build
 ```
+
+## TEST THE ENDPOINTS
+
+Go to the url http://localhost:3303/api-docs/#/ to get the swagger documentation
