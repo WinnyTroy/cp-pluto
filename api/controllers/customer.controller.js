@@ -50,7 +50,7 @@ exports.verify = async (req, res) => {
                     return helpers.response.ErrorResponse(res, "Wrong OTP Code entered. Please try again");
                 }
             } else {
-                return helpers.response.notFoundResponse(res, "The number you want to verify does not exists");
+                return helpers.response.notFoundResponse(res, "ID number entered does not exists. Please try again");
             }
         }, async error => {
             console.error(JSON.stringify(error))

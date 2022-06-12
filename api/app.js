@@ -7,6 +7,9 @@ var cors = require('cors');
 const helpers = require('./helpers/index')
 const Sentry = require("@sentry/node")
 const Tracing = require("@sentry/tracing")
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerDocument = require('./swagger.json');
 var app = express();
 
 Sentry.init({
@@ -32,6 +35,50 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
+
+const options = {
+  definition: {
+    openapi: '3.0.1',
+    info: {
+      title: 'SunCulture API for Customer Portal',
+      version: '1.0.0',
+      description: 'Rest endpoints for use by customer innovation portal',
+    },
+    license: {
+      name: 'Licensed Under MIT',
+      url: 'https://spdx.org/licenses/MIT.html',
+    },
+    basePath: "/api/v1/",
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        }
+      }
+    },
+    contact: {
+      name: 'Sunculture',
+      url: 'https://sunculture.io',
+      email: 'it@sunculture.io'
+    },
+    servers: [
+      {
+        url: "http://localhost:3303",
+        description: 'Development server'
+      },
+      {
+        url: "https://stage.sunculture.io",
+        description: 'Staging server'
+      }
+    ],
+  },
+  apis: ['./routes/*.js'],
+};
+
+const specs = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
 
 app.use('/', require('./routes/index'));
 app.use('/api/v1', require('./routes/users'));
