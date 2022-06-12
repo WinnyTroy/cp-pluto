@@ -1,0 +1,68 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "SunCulture API for Customer Portal"
+    },
+    "host": "localhost:3303",
+    "basePath": "/api/v1",
+    "tags": [{
+        "name": "Customers",
+        "description": "API for customers in the system"
+    }],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        },
+        "JWT": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/api/v1/customer/details": {
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "description": "Create new customer in system",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "query": {
+                              "type": "string",
+                              "description": "Customer National ID Number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New customer is created"
+                    }
+                }
+            }
+        }
+    }
+}
