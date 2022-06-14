@@ -12,7 +12,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerDocument = require('./swagger.json');
 var app = express();
 
-Sentry.init({
+process.env.NODE_ENV === "production" && Sentry.init({
   dsn: "https://9f9dd90308714321bd222a65679fe52c@o1162014.ingest.sentry.io/6474657",
   integrations: [
     new Sentry.Integrations.Http({ tracing: true }),
@@ -69,7 +69,7 @@ const options = {
         description: 'Development server'
       },
       {
-        url: "https://stage.sunculture.io",
+        url: "https://stage.my.sunculture.io",
         description: 'Staging server'
       }
     ],
