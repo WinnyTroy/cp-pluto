@@ -12,6 +12,8 @@ const jwt = require('../helpers/jwt.helper')
  *      get:
  *          summary: Token validation endpoint
  *          description: Check the customers token is valid or not
+ *          security:
+ *              - bearerAuth: []
  *          tags: [Authetication]
  *          responses:
  *              401:
