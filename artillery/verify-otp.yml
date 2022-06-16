@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:3303/api/v1"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+  payload:
+    path: "./csv/otp.csv"
+    fields:
+      - "query"
+      - "code"
+
+scenarios:
+  - name: "Verify the OTP"
+    flow:
+      - post:
+          url: "/customer/verify-otp"
+          json:
+            query: "{{ query }}"
+            code: "{{ code }}"

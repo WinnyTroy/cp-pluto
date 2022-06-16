@@ -1,0 +1,20 @@
+config:
+  target: "http://localhost:3303/api/v1"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+  payload:
+    path: "./csv/devices.csv"
+    fields:
+      - "access_token"
+      - "deviceId"
+
+scenarios:
+  - name: "Verify the Device"
+    flow:
+      - post:
+          url: "/devices/verify"
+          headers:
+            Authorization: "Bearer {{ access_token }}"
+          json:
+            deviceId: "{{ deviceId }}"
