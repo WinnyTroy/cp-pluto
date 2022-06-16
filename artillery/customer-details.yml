@@ -1,0 +1,17 @@
+config:
+  target: "http://localhost:3303/api/v1"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+  payload:
+    path: "./csv/customer.csv"
+    fields:
+      - "query"
+
+scenarios:
+  - name: "Customer Details"
+    flow:
+      - post:
+          url: "/customer/details"
+          json:
+            query: "{{ query }}"

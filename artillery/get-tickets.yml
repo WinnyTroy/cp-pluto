@@ -1,0 +1,17 @@
+config:
+  target: "http://localhost:3303/api/v1"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+  payload:
+    path: "./csv/tokens.csv"
+    fields:
+      - "access_token"
+
+scenarios:
+  - name: "Get Tickets"
+    flow:
+      - get:
+          headers:
+            Authorization: "Bearer {{ access_token }}"
+          url: "/tickets"

@@ -3,7 +3,7 @@
     "username": "sunculture_api",
     "password": "3EDdDngGWVStyM2fnakDDsgj6ctQ3t=",
     "database": "sunculture_db",
-    "host": "ms-sunculture-mysq",
+    "host": "ms-sunculture-mysql",
     "dialect": "mysql"
   },
   "test": {
