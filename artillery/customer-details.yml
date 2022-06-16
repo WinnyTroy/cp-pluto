@@ -1,5 +1,5 @@
 config:
-  target: "http://localhost:3303/api/v1"
+  target: "https://stage.my.sunculture.io/api/v1"
   phases:
     - duration: 60
       arrivalRate: 20

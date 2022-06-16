@@ -1,5 +1,5 @@
 config:
-  target: "http://localhost:3303/api/v1"
+  target: "https://stage.my.sunculture.io/api/v1"
   phases:
     - duration: 60
       arrivalRate: 20
@@ -7,7 +7,7 @@ config:
     path: "./csv/devices.csv"
     fields:
       - "access_token"
-      - "deviceId"
+      - "device_id"
 
 scenarios:
   - name: "Verify the Device"
@@ -17,4 +17,4 @@ scenarios:
           headers:
             Authorization: "Bearer {{ access_token }}"
           json:
-            deviceId: "{{ deviceId }}"
+            deviceId: !!str "869640056842126"

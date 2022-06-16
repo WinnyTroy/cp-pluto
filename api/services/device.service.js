@@ -20,7 +20,7 @@ exports.verify = async (req, res, next) => {
                 log.create(json)
                 resolve("Success. Your Device has been verified successfully")
             } else {
-                //_this.issue(res.JWTDecodedData.nationalID, req.body.deviceId)
+                _this.issue(res.JWTDecodedData.nationalID, req.body.deviceId)
                 json['desc'] = `We are unable to verify your device for ${res.JWTDecodedData.nationalID}`
                 log.create(json)
                 resolve("Failed. We are unable to verify your device")

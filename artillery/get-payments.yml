@@ -9,9 +9,9 @@ config:
       - "access_token"
 
 scenarios:
-  - name: "Get Tickets"
+  - name: "Get Payment History"
     flow:
       - get:
           headers:
             Authorization: "Bearer {{ access_token }}"
-          url: "/tickets"
+          url: "/payment-history"
