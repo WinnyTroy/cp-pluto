@@ -23,3 +23,25 @@ exports.checkAuth = async (req, res, next) => {
         return response.unauthorizedResponse(res, "Missing header authorization token")
     }
 }
+
+exports.checkRefreshToken = async (req, res, next) => {
+    const privateKey = process.env.REFRESH_TOKEN_PRIVATE_KEY;
+    const refreshToken = req.body.refreshToken
+    return new Promise(async (resolve, reject) => {
+        if (typeof refreshToken !== 'undefined') {
+            await jwt.verify(refreshToken, privateKey, async (err, tokenDetails) => {
+                if (err) {
+                    reject({ error: true, message: "Invalid refresh token" })
+                } else {
+                    resolve({
+                        tokenDetails,
+                        error: false,
+                        message: "Valid refresh token",
+                    })
+                }
+            })
+        } else {
+            reject({ error: true, message: "Invalid refresh token" })
+        }
+    })
+}

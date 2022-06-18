@@ -42,10 +42,14 @@ exports.verify = async (req, res) => {
                 if (parseInt(result.code) === parseInt(req.body.code)) {
                     console.log(`[Verify OTP]: ${JSON.stringify(result)}`)
                     let payload = { phoneNumber: result.phoneNumber, nationalID: result.nationalID, code: result.nationalID, otpId: result.otpId, id: result.id }
-                    var token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-                        expiresIn: process.env.JWT_EXPIRATION_TIME
-                    });
-                    return helpers.response.successResponseWithData(res, "Your OTP Code has been verified successful", { token: token });
+                    var token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRATION_TIME });
+
+                    /**
+                     * Refresh token generator
+                     */
+                    const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_PRIVATE_KEY, { expiresIn: "30d" });
+
+                    return helpers.response.successResponseWithData(res, "Your OTP Code has been verified successful", { token: token, refreshToken: refreshToken });
                 } else {
                     return helpers.response.ErrorResponse(res, "Wrong OTP Code entered. Please try again");
                 }
