@@ -9,6 +9,7 @@ const Sentry = require("@sentry/node")
 const Tracing = require("@sentry/tracing")
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const basicAuth = require('express-basic-auth');
 const swaggerDocument = require('./swagger.json');
 var app = express();
 
@@ -78,7 +79,10 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
+app.use("/api-docs", basicAuth({
+  users: { 'api': 'api1234,' },
+  challenge: true,
+}), swaggerUi.serve, swaggerUi.setup(specs))
 
 app.use('/', require('./routes/index'));
 app.use('/api/v1', require('./routes/users'));
