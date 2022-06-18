@@ -76,11 +76,15 @@ exports.queryCustomerInfo = async (value) => {
                 reject(`Request failed. Get Customer details endpoint is returning an error: ${error}`)
             } else {
                 let responseBody = JSON.parse(response.body)
-                console.info(`[Data from api.sunculture]: ${JSON.stringify(responseBody)}`)
+                console.info(`[EXTERNAL API CALL RESPONSE] [customers.accounts]: ${JSON.stringify(responseBody)}`)
                 if (responseBody.data.length > 0) {
                     resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber, status: responseBody.data[0].status })
                 } else {
-                    reject("No Account info found")
+                    if (responseBody.status === true) {
+                        reject("No Account info found")
+                    } else {
+                        reject(responseBody.err)
+                    }
                 }
             }
         });
@@ -103,7 +107,7 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
                 reject(`Request failed. Something Went wrong Please try again later`)
             } else {
                 let responseBody = JSON.parse(response.body)
-                console.info(`[Data from api.sunculture]: ${JSON.stringify(responseBody)}`)
+                console.info(`[EXTERNAL API CALL RESPONSE] [customer.account.details]: ${JSON.stringify(responseBody)}`)
                 if (responseBody.status === true) {
                     await _this.queryCustomerInfo(res.JWTDecodedData.nationalID).then(async info => {
                         console.info(info)
