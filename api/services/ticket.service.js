@@ -89,6 +89,7 @@ exports.create = async (req, res, next) => {
                         EX: parseInt(process.env.REDIS_TTL),
                         NX: true
                     });
+                    console.info(`Redis data has been saved successfully`)
                 } catch (e) {
                     console.error(e)
                 }
@@ -115,7 +116,7 @@ exports.fetch = async (req, res, next) => {
             } else {
                 try {
                     let redisResponse = await redisClient.get(res.JWTDecodedData.nationalID)
-                    console.log(redisResponse)
+                    console.log(`REDIS RESPONSE: ${redisResponse}`)
                     if (redisResponse != null) {
                         let parseData = JSON.parse(response.body)
                         let parseDataArray = parseData.results
