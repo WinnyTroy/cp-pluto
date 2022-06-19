@@ -3,7 +3,7 @@ const Joi = require('joi');
 module.exports = {
     schemas: {
         verify: Joi.object().keys({
-            deviceId: Joi.string().required()
+            deviceId: Joi.string().regex(/^(86)?([0-9]{13})$/).required()
         })
     },
 
