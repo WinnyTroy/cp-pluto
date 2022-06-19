@@ -1,6 +1,8 @@
 require('dotenv').config()
 const request = require('request');
 const log = require('./log.service')
+const redisClient = require('../helpers/redis.helper')
+const moment = require('moment')
 
 exports.create = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
@@ -44,6 +46,52 @@ exports.create = async (req, res, next) => {
                 console.info(`response from freshdesk: ${response.body}`)
                 json['desc'] = `Customer with ID: ${res.JWTDecodedData.nationalID} has raised the ticket successful`
                 log.create(json)
+                /**
+                 * Add the data into redis for x seconds
+                 */
+                let preJson = {
+                    "cc_emails": [],
+                    "fwd_emails": [],
+                    "reply_cc_emails": [],
+                    "ticket_cc_emails": [],
+                    "fr_escalated": false,
+                    "spam": false,
+                    "email_config_id": null,
+                    "group_id": req.body.groupId,
+                    "priority": 1,
+                    "requester_id": 2043126413135,
+                    "responder_id": 2043099900158,
+                    "source": 2,
+                    "company_id": null,
+                    "status": 5,
+                    "subject": req.body.subject,
+                    "association_type": null,
+                    "support_email": null,
+                    "to_emails": null,
+                    "product_id": null,
+                    "id": 0,
+                    "type": null,
+                    "due_by": "2022-06-03T06:00:00Z",
+                    "fr_due_by": "2022-06-03T06:00:00Z",
+                    "is_escalated": false,
+                    "description": `<div>${req.body.description}</div>`,
+                    "description_text": req.body.description,
+                    "custom_fields": {},
+                    "created_at": moment().format('YYYY-MM-DD HH:mm:ss'),
+                    "updated_at": moment().format('YYYY-MM-DD HH:mm:ss'),
+                    "associated_tickets_count": null,
+                    "tags": [],
+                    "nr_due_by": null,
+                    "nr_escalated": false
+                }
+                try {
+                    redisClient.set(res.JWTDecodedData.nationalID, JSON.stringify(preJson), {
+                        EX: parseInt(process.env.REDIS_TTL),
+                        NX: true
+                    });
+                } catch (e) {
+                    console.error(e)
+                }
                 resolve(response.body)
             }
         });
@@ -65,7 +113,16 @@ exports.fetch = async (req, res, next) => {
                 console.error(error)
                 reject(error)
             } else {
-                resolve(JSON.parse(response.body))
+                let redisResponse = await redisClient.get(res.JWTDecodedData.nationalID)
+                console.log(redisResponse)
+                if (redisResponse != null) {
+                    let parseData = JSON.parse(response.body)
+                    let parseDataArray = parseData.results
+                    parseDataArray.push(JSON.parse(redisResponse))
+                    resolve({ results: parseDataArray, total: parseInt(parseData.total) + 1 })
+                } else {
+                    resolve(JSON.parse(response.body))
+                }
             }
         });
     })
