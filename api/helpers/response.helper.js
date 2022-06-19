@@ -13,6 +13,20 @@ exports.successResponse = function (res, msg) {
     return res.status(200).json(data);
 };
 
+exports.failureResponse = function (res, msg) {
+    var data = {
+        headers: {
+            status: false,
+            status_code: 202,
+            status_message: msg,
+            request_id: uuidv4()
+        },
+        body: ""
+    };
+    return res.status(202).json(data);
+};
+
+
 exports.successResponseWithData = function (res, msg, data) {
     var resData = {
         headers: {

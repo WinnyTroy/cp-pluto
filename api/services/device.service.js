@@ -18,12 +18,12 @@ exports.verify = async (req, res, next) => {
             if (data.deviceId === req.body.deviceId) {
                 json['desc'] = `Device for ${res.JWTDecodedData.nationalID} has been verified successful`
                 log.create(json)
-                resolve("Success. Your Device has been verified successfully")
+                resolve({ status: true, message: 'Success. Your Device has been verified successfully' })
             } else {
                 _this.issue(res.JWTDecodedData.nationalID, req.body.deviceId)
                 json['desc'] = `We are unable to verify your device for ${res.JWTDecodedData.nationalID}`
                 log.create(json)
-                resolve("Failed. We are unable to verify your device")
+                resolve({ status: false, message: 'Failed. We are unable to verify your device' })
             }
         }, async err => {
             console.error(err)
