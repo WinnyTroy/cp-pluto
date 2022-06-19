@@ -113,14 +113,19 @@ exports.fetch = async (req, res, next) => {
                 console.error(error)
                 reject(error)
             } else {
-                let redisResponse = await redisClient.get(res.JWTDecodedData.nationalID)
-                console.log(redisResponse)
-                if (redisResponse != null) {
-                    let parseData = JSON.parse(response.body)
-                    let parseDataArray = parseData.results
-                    parseDataArray.push(JSON.parse(redisResponse))
-                    resolve({ results: parseDataArray, total: parseInt(parseData.total) + 1 })
-                } else {
+                try {
+                    let redisResponse = await redisClient.get(res.JWTDecodedData.nationalID)
+                    console.log(redisResponse)
+                    if (redisResponse != null) {
+                        let parseData = JSON.parse(response.body)
+                        let parseDataArray = parseData.results
+                        parseDataArray.push(JSON.parse(redisResponse))
+                        resolve({ results: parseDataArray, total: parseInt(parseData.total) + 1 })
+                    } else {
+                        resolve(JSON.parse(response.body))
+                    }
+                } catch (e) {
+                    console.error(e)
                     resolve(JSON.parse(response.body))
                 }
             }

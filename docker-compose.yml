@@ -101,7 +101,7 @@ services:
     container_name: ms-sunculture-redis
     restart: unless-stopped
     ports:
-      - "6389:6379"
+      - "6379:6379"
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
