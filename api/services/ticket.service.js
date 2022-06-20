@@ -21,7 +21,7 @@ exports.create = async (req, res, next) => {
                 "priority": 1,
                 "status": 2,
                 "unique_external_id": nationalID,
-                "group_id": req.body.groupId,
+                "group_id": parseInt(req.body.groupId),
                 "name": "portal",
                 "phone": res.JWTDecodedData.phoneNumber,
                 "custom_fields": {
@@ -63,7 +63,7 @@ exports.create = async (req, res, next) => {
                     "responder_id": 2043099900158,
                     "source": 2,
                     "company_id": null,
-                    "status": 5,
+                    "status": 0,
                     "subject": req.body.subject,
                     "association_type": null,
                     "support_email": null,
@@ -120,7 +120,7 @@ exports.fetch = async (req, res, next) => {
                     if (redisResponse != null) {
                         let parseData = JSON.parse(response.body)
                         let parseDataArray = parseData.results
-                        parseDataArray.push(JSON.parse(redisResponse))
+                        parseDataArray.unshift(JSON.parse(redisResponse))
                         resolve({ results: parseDataArray, total: parseInt(parseData.total) + 1 })
                     } else {
                         resolve(JSON.parse(response.body))
