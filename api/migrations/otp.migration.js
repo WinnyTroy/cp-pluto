@@ -27,6 +27,12 @@ module.exports = {
                 allowNull: false,
                 unique: false,
             },
+            dv_count: {
+                type: Sequelize.STRING(10),
+                allowNull: false,
+                unique: false,
+                defaultValue: "0"
+            },
             expiry: {
                 type: Sequelize.STRING,
                 allowNull: false,
