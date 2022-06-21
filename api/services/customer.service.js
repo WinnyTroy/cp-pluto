@@ -138,3 +138,14 @@ exports.fetchOtpDetail = async (req) => {
         })
     })
 }
+
+exports.resetDVCountAll = async () => {
+    return new Promise(async (resolve, reject) => {
+        await models.otp.update({ dv_count: "0" }, { where: {} }).then(async result => {
+            resolve(result)
+        }, async err => {
+            console.error(err)
+            reject(err)
+        })
+    })
+}

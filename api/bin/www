@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var app = require('../app');
+const cron = require('./cron');
 var debug = require('debug')('sc-backend:server');
 var http = require('http');
 var port = normalizePort(process.env.PORT || '3303');
