@@ -2,32 +2,39 @@ require('dotenv').config()
 const customer = require('./customer.service')
 const request = require('request');
 const log = require('./log.service')
+const models = require('../models/index')
 let _this = this
 
 exports.verify = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
-        await customer.fetchCustomersAccountDetails(req, res, next).then(async response => {
-            let data = response.data
+        await models.otp.findOne({ where: { nationalID: res.JWTDecodedData.nationalID } }).then(async customerOtpInfo => {
+            if (parseInt(customerOtpInfo.dv_count) < 2) {
+                await customer.fetchCustomersAccountDetails(req, res, next).then(async response => {
+                    let data = response.data
 
-            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-            let json = {
-                otpId: res.JWTDecodedData.otpId, requestId: res.JWTDecodedData.id, nationalID: res.JWTDecodedData.nationalID, action: 'VERIFY DEVICE',
-                ip: ip, userAgent: req.headers["user-agent"], resourcePath: req.url, method: req.method
-            }
-
-            if (data.deviceId === req.body.deviceId) {
-                json['desc'] = `Device for ${res.JWTDecodedData.nationalID} has been verified successful`
-                log.create(json)
-                resolve({ status: true, message: 'Success. Your Device has been verified successfully' })
+                    var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+                    let json = {
+                        otpId: res.JWTDecodedData.otpId, requestId: res.JWTDecodedData.id, nationalID: res.JWTDecodedData.nationalID, action: 'VERIFY DEVICE',
+                        ip: ip, userAgent: req.headers["user-agent"], resourcePath: req.url, method: req.method
+                    }
+                    models.otp.update({ dv_count: parseInt(customerOtpInfo.dv_count) + 1 }, { where: { nationalID: res.JWTDecodedData.nationalID } })
+                    if (data.deviceId === req.body.deviceId) {
+                        json['desc'] = `Device for ${res.JWTDecodedData.nationalID} has been verified successful`
+                        log.create(json)
+                        resolve({ status: true, message: 'Success. Your Device has been verified successfully' })
+                    } else {
+                        _this.issue(res.JWTDecodedData.nationalID, req.body.deviceId)
+                        json['desc'] = `We are unable to verify your device for ${res.JWTDecodedData.nationalID}`
+                        log.create(json)
+                        resolve({ status: false, message: 'Failed. We are unable to verify your device' })
+                    }
+                }, async err => {
+                    console.error(err)
+                    reject(err)
+                })
             } else {
-                _this.issue(res.JWTDecodedData.nationalID, req.body.deviceId)
-                json['desc'] = `We are unable to verify your device for ${res.JWTDecodedData.nationalID}`
-                log.create(json)
-                resolve({ status: false, message: 'Failed. We are unable to verify your device' })
+                resolve({ status: false, message: 'Oops! You have reached the maximum number to verify device today. Try this tomorrow' })
             }
-        }, async err => {
-            console.error(err)
-            reject(err)
         })
     })
 }
