@@ -3,5 +3,6 @@ module.exports = {
     ticket: require('./ticket.controller'),
     device: require('./device.controller'),
     payment: require('./payment.controller'),
-    auth: require('./auth.controller')
+    auth: require('./auth.controller'),
+    referral: require('./referral.controller')
 }
