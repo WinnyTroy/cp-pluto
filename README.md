@@ -28,10 +28,10 @@ sudo apt-get install npm
 3. Create mysql username and password
 
 ```bash
-CREATE USER 'sunculture_api'@'localhost' IDENTIFIED BY '3EDdDngGWVStyM2fnakDDsgj6ctQ3t=';
+CREATE USER '<ENTER_USERNAME>'@'localhost' IDENTIFIED BY '<ENTER_PASSWORD>';
 
 
-GRANT ALL PRIVILEGES ON _._ TO 'sunculture_api'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON _._ TO '<ENTER_USERNAME>'@'localhost' WITH GRANT OPTION;
 
 ```
 
@@ -78,3 +78,7 @@ sudo docker-compose up -d --no-deps --build
 ## TEST THE ENDPOINTS
 
 Go to the url http://localhost:3303/api-docs/#/ to get the swagger documentation
+
+## PRODUCTION ENDPOINTS
+
+To test the production endpoint, Go to the url https://stage.my.sunculture.io/api-docs and when prompted request the username and password from <IT Manager>
