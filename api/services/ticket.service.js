@@ -47,7 +47,7 @@ exports.create = async (req, res, next) => {
                 json['desc'] = `Customer with ID: ${res.JWTDecodedData.nationalID} has raised the ticket successful`
                 log.create(json)
                 /**
-                 * Add the data into redis for x seconds
+                 * Add the data into redis for PROCESS.ENV.REDIS_TTL seconds
                  */
                 let preJson = {
                     "cc_emails": [],

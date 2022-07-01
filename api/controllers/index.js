@@ -4,5 +4,6 @@ module.exports = {
     device: require('./device.controller'),
     payment: require('./payment.controller'),
     auth: require('./auth.controller'),
-    referral: require('./referral.controller')
+    referral: require('./referral.controller'),
+    crypto: require('./crypto.controller')
 }

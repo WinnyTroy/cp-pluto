@@ -6,5 +6,6 @@ module.exports = {
     payment: require('./payment.service'),
     log: require('./log.service'),
     auth: require('./auth.service'),
-    referral: require('./referral.service')
+    referral: require('./referral.service'),
+    crypto: require('./crypto.service')
 }
