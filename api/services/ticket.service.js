@@ -133,3 +133,29 @@ exports.fetch = async (req, res, next) => {
         });
     })
 }
+
+exports.fetchConversations = async (req, res, next) => {
+    return new Promise(async (resolve, reject) => {
+        var options = {
+            'method': 'GET',
+            'url': `${process.env.POST_TICKETS}/${parseInt(req.body.ticketId)}/conversations`,
+            'headers': {
+                'Authorization': `Basic ${process.env.BEARER}`,
+                'Cookie': '_x_w=31_1'
+            }
+        };
+        await request(options, async (error, response) => {
+            if (error) {
+                console.error(error)
+                reject(error)
+            } else {
+                console.info(response.statusCode)
+                if (response.statusCode !== 200) {
+                    resolve([])
+                } else {
+                    resolve(JSON.parse(response.body))
+                }
+            }
+        });
+    })
+}

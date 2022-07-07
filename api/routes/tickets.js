@@ -72,4 +72,34 @@ router.post('/tickets', Joi.validateBody(Joi.schemas.create), jwt.checkAuth, con
  */
 router.get('/tickets', jwt.checkAuth, controller.ticket.fetch);
 
+
+/**
+ * @swagger
+ *  /api/v1/tickets/conversations:
+ *      post:
+ *          summary: Get Customers tickets conversations
+ *          description: Displays the list of the customers raised tickets conversations
+ *          tags: [Tickets]
+ *          security: 
+ *              - bearerAuth: []
+*          requestBody:
+ *            required: true
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          ticketId:
+ *                              type: number
+ *                              description: 'Enter the Ticket ID' 
+ *          responses:
+ *              401:
+ *                  description: 'Authorization error'
+ *              500:
+ *                  description: 'Internal server error'
+ *              200:
+ *                  description: 'Request was successful'
+ */
+router.post('/tickets/conversations', Joi.validateBody(Joi.schemas.conversation), jwt.checkAuth, controller.ticket.fetchConversations);
+
 module.exports = router;

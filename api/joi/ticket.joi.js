@@ -7,6 +7,10 @@ module.exports = {
             groupId: Joi.number().required(),
             subject: Joi.string().required(),
             description: Joi.string().required()
+        }),
+
+        conversation: Joi.object().keys({
+            ticketId: Joi.number().required()
         })
     },
 
