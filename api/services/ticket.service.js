@@ -47,7 +47,7 @@ exports.create = async (req, res, next) => {
                 json['desc'] = `Customer with ID: ${res.JWTDecodedData.nationalID} has raised the ticket successful`
                 log.create(json)
                 /**
-                 * Add the data into redis for x seconds
+                 * Add the data into redis for PROCESS.ENV.REDIS_TTL seconds
                  */
                 let preJson = {
                     "cc_emails": [],
@@ -127,6 +127,32 @@ exports.fetch = async (req, res, next) => {
                     }
                 } catch (e) {
                     console.error(e)
+                    resolve(JSON.parse(response.body))
+                }
+            }
+        });
+    })
+}
+
+exports.fetchConversations = async (req, res, next) => {
+    return new Promise(async (resolve, reject) => {
+        var options = {
+            'method': 'GET',
+            'url': `${process.env.POST_TICKETS}/${parseInt(req.body.ticketId)}/conversations`,
+            'headers': {
+                'Authorization': `Basic ${process.env.BEARER}`,
+                'Cookie': '_x_w=31_1'
+            }
+        };
+        await request(options, async (error, response) => {
+            if (error) {
+                console.error(error)
+                reject(error)
+            } else {
+                console.info(response.statusCode)
+                if (response.statusCode !== 200) {
+                    resolve([])
+                } else {
                     resolve(JSON.parse(response.body))
                 }
             }
