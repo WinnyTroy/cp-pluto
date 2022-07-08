@@ -116,7 +116,7 @@ exports.fetch = async (req, res, next) => {
             } else {
                 try {
                     let redisResponse = await redisClient.get(res.JWTDecodedData.nationalID)
-                    console.log(`REDIS RESPONSE: ${redisResponse}`)
+                    console.log(`FETCH REDIS RESPONSE: ${redisResponse}`)
                     if (redisResponse != null) {
                         let parseData = JSON.parse(response.body)
                         let parseDataArray = parseData.results

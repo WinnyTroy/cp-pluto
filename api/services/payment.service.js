@@ -2,7 +2,6 @@ require('dotenv').config()
 const request = require('request');
 const log = require('./log.service')
 
-
 exports.getPaymentHistory = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         var options = {
