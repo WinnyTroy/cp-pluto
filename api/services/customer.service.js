@@ -11,26 +11,14 @@ exports.check = async (req) => {
         let code = await helpers.utility.randomNumber(4)
         console.info(`[OTP GENERATED]:  code is ${code}`)
         _this.queryCustomerInfo(req.body.query).then(async result => {
-            await models.otp.findAll({
-                where: {
-                    phoneNumber: result.phoneNumber,
-                    nationalID: result.nationalID
-                }
-            }).then(async customer => {
+            await models.otp.findAll({ where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async customer => {
                 if (parseInt(customer.length) > 0) {
-                    await models.otp.update({
-                        code: code
-                    }, {
-                        where: {
-                            phoneNumber: result.phoneNumber,
-                            nationalID: result.nationalID
-                        }
-                    }).then(async res => {
-                        console.log(res)
+                    await models.otp.update({ code: code }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async res => {
                         sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
                         resolve(res)
                     }, async err => {
-                        console.log(err)
+                        console.error(err)
+                        reject(err)
                     })
                 } else {
                     await models.otp.create({
@@ -81,8 +69,10 @@ exports.queryCustomerInfo = async (value) => {
                     resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber, status: responseBody.data[0].status })
                 } else {
                     if (responseBody.status === true) {
+                        console.info(`No Customer Account found for: ${value}`)
                         reject("No Account info found")
                     } else {
+                        console.error(responseBody.err)
                         reject(responseBody.err)
                     }
                 }
@@ -118,6 +108,7 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
                         reject(err)
                     })
                 } else {
+                    console.error(responseBody.err)
                     reject(responseBody.err)
                 }
             }
@@ -126,11 +117,7 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
 }
 exports.fetchOtpDetail = async (req) => {
     return new Promise(async (resolve, reject) => {
-        await models.otp.findAll({
-            where: {
-                nationalID: req.body.query
-            }
-        }).then(async customer => {
+        await models.otp.findAll({ where: { nationalID: req.body.query } }).then(async customer => {
             resolve(customer)
         }, async err => {
             console.error(err)

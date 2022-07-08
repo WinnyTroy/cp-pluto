@@ -81,7 +81,7 @@ exports.issue = async (nationalID, deviceId) => {
                 console.error(error)
                 reject(error)
             } else {
-                console.log(response.body);
+                console.info(response.body);
                 resolve(response.body)
             }
         });
