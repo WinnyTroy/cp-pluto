@@ -12,7 +12,7 @@ const jwt = require('../helpers/jwt.helper')
  * @swagger
  *  /api/v1/referrals:
  *      post:
- *          summary: For referrals
+ *          summary: Create a referral
  *          tags: [Referrals]
  *          security:
  *              - bearerAuth: []     
@@ -71,6 +71,53 @@ router.post('/referrals', Joi.validateBody(Joi.schemas.create), jwt.checkAuth, c
  */
 router.get('/referrals', jwt.checkAuth, controller.referral.fetch);
 
+
+/**
+ * @swagger
+ *  /api/v1/referrals:
+ *      put:
+ *          summary: Update a referral
+ *          tags: [Referrals]
+ *          security:
+ *              - bearerAuth: []     
+ *          requestBody:
+ *            required: true
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          fullName:
+ *                              type: string
+ *                              description: 'fullName' 
+ *                          phoneNumber:
+ *                              type: string
+ *                              description: 'Referral Phone Number'
+ *                          location:
+ *                              type: string
+ *                              description: 'Referral location'
+ *                          waterSource:
+ *                              type: string
+ *                              description: 'If the Referral has the watersource or not'
+ *                          productInterested: 
+ *                              type: string
+ *                              description: 'Product of Interest'
+ *          responses:
+ *              401:
+ *                  description: 'Authorization error'
+ *              500:
+ *                  description: 'Internal server error'
+ *              200:
+ *                  description: 'Request was successful'
+ *              400:
+ *                  description: 'Bad Request'
+ *              404:
+ *                  description: 'Not found'
+ */
+
+router.put('/referrals/:referralId', Joi.validateBody(Joi.schemas.create), jwt.checkAuth, controller.referral.update);
+
+
 /**
  * @swagger
  *  /api/v1/referrals:
@@ -93,6 +140,7 @@ router.get('/referrals', jwt.checkAuth, controller.referral.fetch);
  *              200:
  *                  description: 'Request was successful'
  */
+
 router.delete('/referrals/:referralId', jwt.checkAuth, controller.referral.delete);
 
 module.exports = router;

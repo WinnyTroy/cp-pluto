@@ -30,6 +30,20 @@ exports.fetch = async (req, res, next) => {
     }
 }
 
+exports.update = async (req, res, next) => {
+    try {
+        await service.referral.update(req, res, next).then(async results => {
+            return helpers.response.successResponse(res, "Referral details has been updated successful.");
+        }, async error => {
+            console.error(JSON.stringify(error))
+            return helpers.response.notFoundResponse(res, error);
+        })
+    } catch (e) {
+        console.error(e)
+        return helpers.response.ErrorResponse(res, "Request failed. Please try again after sometime.")
+    }
+}
+
 exports.delete = async (req, res, next) => {
     try {
         await service.referral.delete(req, res, next).then(async results => {
