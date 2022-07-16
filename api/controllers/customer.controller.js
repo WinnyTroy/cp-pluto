@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 exports.check = async (req, res) => {
     try {
         await service.customer.check(req, res).then(async results => {
-            return helpers.response.successResponse(res, "Sms code has been sent to your device.");
+            return helpers.response.successResponseWithData(res, "Sms code has been sent to your device.", results);
         }, async error => {
             console.error(JSON.stringify(error))
             return helpers.response.notFoundResponse(res, error);
