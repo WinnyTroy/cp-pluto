@@ -15,7 +15,7 @@ exports.check = async (req) => {
                 if (parseInt(customer.length) > 0) {
                     await models.otp.update({ code: code }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async res => {
                         sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
-                        resolve(res)
+                        resolve({ msisdn: result.phoneNumber })
                     }, async err => {
                         console.error(err)
                         reject(err)
@@ -31,7 +31,7 @@ exports.check = async (req) => {
                     }).then(async record => {
                         console.log(record)
                         sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
-                        resolve(record)
+                        resolve({ msisdn: result.phoneNumber })
                     }, async err => {
                         console.error(err)
                         reject(err)
