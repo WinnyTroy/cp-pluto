@@ -7,7 +7,7 @@ const assert = require('assert');
  * TEST CUSTOMER DETAILS POST
  */
 describe('POST /api/v1/customer/details', function () {
-    it('responds with json', function (done) {
+    it('test customer details return success', function (done) {
         request(app)
             .post('/api/v1/customer/details')
             .send({ query: "12345678" })
@@ -29,7 +29,7 @@ describe('POST /api/v1/customer/details', function () {
  * VERIFY OTP CODE
  */
 describe('POST /customer/verify-otp', function () {
-    it('responds with json', function (done) {
+    it('test invalid otp verification', function (done) {
         request(app)
             .post('/customer/verify-otp')
             .send({ query: "12345678", code: "1234" })

@@ -13,12 +13,15 @@ exports.check = async (req) => {
         _this.queryCustomerInfo(req.body.query).then(async result => {
             await models.otp.findAll({ where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async customer => {
                 if (parseInt(customer.length) > 0) {
-                    await models.otp.update({ code: code }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async res => {
-                        sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
-                        resolve({ msisdn: result.phoneNumber })
+                    await models.otp.update({ code: code }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async () => {
+                        await sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` }).then(async () => {
+                            resolve({ msisdn: result.phoneNumber })
+                        }, async err => {
+                            reject('Request failed. We are unable to send OTP code to your device')
+                        })
                     }, async err => {
                         console.error(err)
-                        reject(err)
+                        reject("Request failed. We are unable to update your OTP code. Please try again later")
                     })
                 } else {
                     await models.otp.create({
@@ -30,11 +33,14 @@ exports.check = async (req) => {
                         status: "0"
                     }).then(async record => {
                         console.log(record)
-                        sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` })
-                        resolve({ msisdn: result.phoneNumber })
+                        await sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` }).then(async () => {
+                            resolve({ msisdn: result.phoneNumber })
+                        }, async err => {
+                            reject('Request failed. We are unable to send OTP code to your device')
+                        })
                     }, async err => {
                         console.error(err)
-                        reject(err)
+                        reject("Request failed. We are unable to update your OTP code. Please try again later")
                     })
                 }
             }, async err => {
