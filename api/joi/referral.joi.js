@@ -6,7 +6,7 @@ module.exports = {
             phoneNumber: Joi.string().required(),
             fullName: Joi.string().required(),
             location: Joi.string().required(),
-            waterSource: Joi.string().required(),
+            waterSource: Joi.string().valid('Yes', 'No').required(),
             productInterested: Joi.string().required()
         })
     },

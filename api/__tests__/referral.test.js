@@ -3,17 +3,18 @@ const request = require("supertest");
 const app = require("../app")
 
 /**
- * TEST TICKETS POST
+ * TEST POST REFERRALS
  */
-describe('POST /api/v1/tickets', function () {
-    it('responds with json', function (done) {
+describe('POST /api/v1/referrals', function () {
+    it('test post referral service', function (done) {
         request(app)
-            .post('/api/v1/tickets')
+            .post('/api/v1/referrals')
             .send({
-                "customerName": "Sarah",
-                "subject": "Evans Subject",
-                "description": "Evans description",
-                "groupId": 2043001286617
+                "fullName": "Doe Joe",
+                "phoneNumber": "0713132819",
+                "location": "Nairobi Kenya",
+                "waterSource": "Yes",
+                "productInterested": "PRODUCT XXX"
             })
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${process.env.TEST_BEARER_TOKEN}`)
@@ -31,12 +32,12 @@ describe('POST /api/v1/tickets', function () {
 });
 
 /**
- * TEST TICKETS GET
+ * TEST FETCH REFERRALS
  */
-describe('POST /api/v1/tickets', function () {
-    it('responds with json', function (done) {
+describe('POST /api/v1/referrals', function () {
+    it('test fetch list of referrals', function (done) {
         request(app)
-            .get('/api/v1/tickets')
+            .get('/api/v1/referrals')
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${process.env.TEST_BEARER_TOKEN}`)
             .expect('Content-Type', /json/)
