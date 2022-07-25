@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const request = require('request');
 const sms = require('./sms.service')
 const helpers = require('../helpers/index')
+const moment = require('moment')
 let _this = this
 
 exports.check = async (req) => {
@@ -13,10 +14,11 @@ exports.check = async (req) => {
         _this.queryCustomerInfo(req.body.query).then(async result => {
             await models.otp.findAll({ where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async customer => {
                 if (parseInt(customer.length) > 0) {
-                    await models.otp.update({ code: code }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async () => {
+                    await models.otp.update({ code: code, updatedAt: moment().format('YYYY-MM-DD HH:mm:ss') }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async () => {
                         await sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` }).then(async () => {
                             resolve({ msisdn: result.phoneNumber })
                         }, async err => {
+                            console.error(err)
                             reject('Request failed. We are unable to send OTP code to your device')
                         })
                     }, async err => {
@@ -36,6 +38,7 @@ exports.check = async (req) => {
                         await sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` }).then(async () => {
                             resolve({ msisdn: result.phoneNumber })
                         }, async err => {
+                            console.error(err)
                             reject('Request failed. We are unable to send OTP code to your device')
                         })
                     }, async err => {
