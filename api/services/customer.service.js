@@ -79,6 +79,7 @@ exports.queryCustomerInfo = async (value) => {
                 } else {
                     if (responseBody.status === true) {
                         console.info(`No Customer Account found for: ${value}`)
+                        helpers.logger.info("No customer account found")
                         reject("No Account info found")
                     } else {
                         console.error(responseBody.err)
@@ -109,7 +110,7 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
                 console.info(`[EXTERNAL API CALL RESPONSE] [customer.account.details]: ${JSON.stringify(responseBody)}`)
                 if (responseBody.status === true) {
                     await _this.queryCustomerInfo(res.JWTDecodedData.nationalID).then(async info => {
-                        console.info(info)
+                        helpers.logger.child({ context: info }).info("Account info found")
                         responseBody.data['status'] = info.status
                         resolve(responseBody)
                     }, async err => {

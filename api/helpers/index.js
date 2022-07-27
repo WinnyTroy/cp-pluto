@@ -3,5 +3,6 @@ module.exports = {
     utility: require('./utility.helper'),
     jwt: require('./jwt.helper'),
     redisClient: require('./redis.helper'),
-    crypto: require('./crypto.helper')
+    crypto: require('./crypto.helper'),
+    logger: require('./logger.helper')
 }
