@@ -18,7 +18,7 @@ const logger = createLogger({
         format.printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}: ${JSON.stringify(info.context)}: ${info.service}`)
     ),
     defaultMeta: {
-        service: "billing-service",
+        service: "customer-portal-service",
     },
     transports: [new transports.Console()],
     exceptionHandlers: [new transports.File({ filename: "exceptions.log" })],
