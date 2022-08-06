@@ -106,3 +106,43 @@
 [31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/routes/users.js:7:13)[39m
 [31m    at Module._compile (internal/modules/cjs/loader.js:1185:30)[39m
 [31m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1205:10)[39m: undefined: customer-portal-service
+[2022-08-06T17:48:03.811Z] [31merror[39m: [31muncaughtException: Unexpected token ';'[39m
+[31m/Users/ekibet/workspace/test/customer_portal_api/api/services/weather.service.js:23[39m
+[31m                    jsonDao.push({ date: moment.unix(hourly[i].dt).format("MM/DD/YYYY"); })[39m
+[31m                                                                                       ^[39m
+
+[31mSyntaxError: Unexpected token ';'[39m
+[31m    at wrapSafe (internal/modules/cjs/loader.js:1101:16)[39m
+[31m    at Module._compile (internal/modules/cjs/loader.js:1149:27)[39m
+[31m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1205:10)[39m
+[31m    at Module.load (internal/modules/cjs/loader.js:1034:32)[39m
+[31m    at Function.Module._load (internal/modules/cjs/loader.js:923:14)[39m
+[31m    at Module.require (internal/modules/cjs/loader.js:1074:19)[39m
+[31m    at require (internal/modules/cjs/helpers.js:72:18)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/services/index.js:11:14)[39m
+[31m    at Module._compile (internal/modules/cjs/loader.js:1185:30)[39m
+[31m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1205:10)[39m: undefined: customer-portal-service
+[2022-08-06T18:12:36.592Z] [31merror[39m: [31muncaughtException: Route.post() requires a callback function but got a [object Undefined][39m
+[31mError: Route.post() requires a callback function but got a [object Undefined][39m
+[31m    at Route.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/route.js:211:15)[39m
+[31m    at Function.proto.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/index.js:521:19)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/routes/weathers.js:43:8)[39m
+[31m    at Module._compile (internal/modules/cjs/loader.js:1185:30)[39m
+[31m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1205:10)[39m
+[31m    at Module.load (internal/modules/cjs/loader.js:1034:32)[39m
+[31m    at Function.Module._load (internal/modules/cjs/loader.js:923:14)[39m
+[31m    at Module.require (internal/modules/cjs/loader.js:1074:19)[39m
+[31m    at require (internal/modules/cjs/helpers.js:72:18)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/app.js:95:20)[39m: undefined: customer-portal-service
+[2022-08-06T18:12:49.897Z] [31merror[39m: [31muncaughtException: Route.post() requires a callback function but got a [object Undefined][39m
+[31mError: Route.post() requires a callback function but got a [object Undefined][39m
+[31m    at Route.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/route.js:211:15)[39m
+[31m    at Function.proto.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/index.js:521:19)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/routes/weathers.js:43:8)[39m
+[31m    at Module._compile (internal/modules/cjs/loader.js:1185:30)[39m
+[31m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1205:10)[39m
+[31m    at Module.load (internal/modules/cjs/loader.js:1034:32)[39m
+[31m    at Function.Module._load (internal/modules/cjs/loader.js:923:14)[39m
+[31m    at Module.require (internal/modules/cjs/loader.js:1074:19)[39m
+[31m    at require (internal/modules/cjs/helpers.js:72:18)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/app.js:95:20)[39m: undefined: customer-portal-service
