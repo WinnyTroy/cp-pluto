@@ -92,6 +92,7 @@ app.use('/api/v1', require('./routes/payments'))
 app.use('/api/v1', require('./routes/auth'))
 app.use('/api/v1', require('./routes/referrals'))
 app.use('/api/v1', require('./routes/cryptos'))
+app.use('/api/v1', require('./routes/weathers'))
 
 app.use(Sentry.Handlers.errorHandler());
 

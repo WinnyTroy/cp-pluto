@@ -7,5 +7,6 @@ module.exports = {
     log: require('./log.service'),
     auth: require('./auth.service'),
     referral: require('./referral.service'),
-    crypto: require('./crypto.service')
+    crypto: require('./crypto.service'),
+    weather: require('./weather.service')
 }
