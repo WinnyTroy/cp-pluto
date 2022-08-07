@@ -18,9 +18,6 @@ RUN npm install
 	
 EXPOSE 3303
 
-#CMD ["pm2-runtime", "./ecosystem.config.js", "--env", "production", "--formatted"]
-#RUN npm ci --only=production
-
-CMD [ "node", "bin/www" ]
+CMD ["pm2-runtime", "./ecosystem.config.js", "--env", "production", "--formatted"]
 
 
