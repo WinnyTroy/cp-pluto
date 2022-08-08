@@ -8,8 +8,6 @@ COPY .env .
 
 COPY . .
 
-RUN NODE_ENV=production npm ci
-
 RUN npm config set unsafe-perm true
 
 RUN npm install pm2 -g
