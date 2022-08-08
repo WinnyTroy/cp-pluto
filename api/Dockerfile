@@ -6,13 +6,15 @@ WORKDIR /usr/src/ms-sunculture-api
 
 COPY .env .
 
+COPY package.json package-lock.json .
+
 COPY . .
+
+RUN NODE_ENV=production npm ci
 
 RUN npm config set unsafe-perm true
 
 RUN npm install pm2 -g
-
-RUN npm install --package-lock-only
 
 RUN pm2 list
 
