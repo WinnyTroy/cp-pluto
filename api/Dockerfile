@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:14.17.1-alpine3.13 AS builder
 
 RUN mkdir -p /usr/src/ms-sunculture-api
 
@@ -11,6 +11,8 @@ COPY . .
 RUN npm config set unsafe-perm true
 
 RUN npm install pm2 -g
+
+RUN npm install --package-lock-only
 
 RUN pm2 list
 
