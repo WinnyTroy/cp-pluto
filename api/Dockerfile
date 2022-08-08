@@ -6,8 +6,6 @@ WORKDIR /usr/src/ms-sunculture-api
 
 COPY .env .
 
-COPY package.json package-lock.json .
-
 COPY . .
 
 RUN NODE_ENV=production npm ci
