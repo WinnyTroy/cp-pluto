@@ -4,10 +4,12 @@ const moment = require('moment')
 
 exports.forcast = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
-        let currentUnixTime = "1659594550"
+        let currentRawDate = moment().subtract(7, 'd').format('YYYY-MM-DD');
+        var dateString = moment(new Date(currentRawDate)).format('x');
+        console.log("ddadddddddddd", dateString)
         let options = {
             'method': 'GET',
-            'url': `${process.env.OPEN_WEATHER_FORCAST_API_URL}?exclude=hourly&cnt=8&lat=${req.body.lat}&lon=${req.body.lng}&dt=${currentUnixTime}&appid=${process.env.OPEN_WEATHER_API_KEY}`,
+            'url': `${process.env.OPEN_WEATHER_FORCAST_API_URL}?exclude=hourly&cnt=16&lat=${req.body.lat}&lon=${req.body.lng}&dt=${dateString}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`,
             'headers': {}
         };
         await request(options, async (error, response) => {
@@ -20,11 +22,15 @@ exports.forcast = async (req, res, next) => {
                 let hourly = parseData.hourly
                 let jsonDao = []
                 for (let i = 0; i < hourly.length; i++) {
-                    jsonDao.push({
-                        dt: moment.unix(hourly[i].dt).format("YYYY-MM-DD HH:mm:ss"),
-                        weather: hourly[i].weather[0].main, description: hourly[i].weather[0].description,
-                        temp: hourly[i].temp, pressure: hourly[i].temp, humidity: hourly[i].humidity
-                    })
+                    let dateformat = moment.unix(hourly[i].dt).format("YYYY-MM-DD")
+                    const dataFound = jsonDao.some(el => el.dt === dateformat);
+                    if (!dataFound) {
+                        jsonDao.push({
+                            dt: dateformat,
+                            weather: hourly[i].weather[0].main, description: hourly[i].weather[0].description,
+                            temp: hourly[i].temp, pressure: hourly[i].temp, humidity: hourly[i].humidity
+                        })
+                    }
                 }
                 resolve(jsonDao)
             }
