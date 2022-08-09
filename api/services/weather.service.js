@@ -42,7 +42,7 @@ exports.current = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         let options = {
             'method': 'GET',
-            'url': `${process.env.OPEN_WEATHER_CURRENT_URL}?lat=${req.body.lat}&lon=${req.body.lng}&appid=${process.env.OPEN_WEATHER_API_KEY}`,
+            'url': `${process.env.OPEN_WEATHER_CURRENT_URL}?lat=${req.body.lat}&lon=${req.body.lng}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`,
             'headers': {}
         };
         await request(options, async (error, response) => {
@@ -60,7 +60,9 @@ exports.current = async (req, res, next) => {
                     country: parseData.sys.country,
                     wind: parseData.wind.speed,
                     pressure: parseData.main.pressure,
-                    humidity: parseData.main.humidity
+                    humidity: parseData.main.humidity,
+                    temp_min: parseData.main.temp_min,
+                    temp_max: parseData.main.temp_max
                 }
                 resolve(json)
             }
