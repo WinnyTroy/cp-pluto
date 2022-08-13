@@ -5,7 +5,18 @@ module.exports = {
         fetch: Joi.object().keys({
             lat: Joi.string().required(),
             lng: Joi.string().required()
-        })
+        }),
+
+        create: Joi.object().keys({
+            latitude: Joi.string().required(),
+            longitude: Joi.string().required(),
+            weather: Joi.string().required(),
+            temp: Joi.string().required(),
+            wind: Joi.string().required(),
+            pressure: Joi.string().required(),
+            humility: Joi.string().required(),
+            status: Joi.string().valid("CORRECT", "NOT_CORRECT").required()
+        }),
     },
 
     validateBody: (schema) => {

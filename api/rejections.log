@@ -146,3 +146,63 @@
 [31m    at Module.require (internal/modules/cjs/loader.js:1074:19)[39m
 [31m    at require (internal/modules/cjs/helpers.js:72:18)[39m
 [31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/app.js:95:20)[39m: undefined: customer-portal-service
+[2022-08-13T06:12:04.369Z] [31merror[39m: [31muncaughtException: Route.post() requires a callback function but got a [object Undefined][39m
+[31mError: Route.post() requires a callback function but got a [object Undefined][39m
+[31m    at Route.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/route.js:211:15)[39m
+[31m    at proto.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/index.js:521:19)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/routes/weathers.js:43:8)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1120:14)[39m
+[31m    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:998:32)[39m
+[31m    at Module._load (node:internal/modules/cjs/loader:839:12)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1022:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/app.js:95:20)[39m: undefined: customer-portal-service
+[2022-08-13T06:12:14.453Z] [31merror[39m: [31muncaughtException: Route.post() requires a callback function but got a [object Undefined][39m
+[31mError: Route.post() requires a callback function but got a [object Undefined][39m
+[31m    at Route.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/route.js:211:15)[39m
+[31m    at proto.<computed> [as post] (/Users/ekibet/workspace/test/customer_portal_api/api/node_modules/express/lib/router/index.js:521:19)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/routes/weathers.js:43:8)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1120:14)[39m
+[31m    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:998:32)[39m
+[31m    at Module._load (node:internal/modules/cjs/loader:839:12)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1022:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/app.js:95:20)[39m: undefined: customer-portal-service
+[2022-08-13T07:20:03.563Z] [31merror[39m: [31muncaughtException: require(...) is not a function[39m
+[31mTypeError: require(...) is not a function[39m
+[31m    at /Users/ekibet/workspace/test/customer_portal_api/api/models/index.js:42:52[39m
+[31m    at Array.forEach (<anonymous>)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/models/index.js:41:4)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1120:14)[39m
+[31m    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:998:32)[39m
+[31m    at Module._load (node:internal/modules/cjs/loader:839:12)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1022:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/services/customer.service.js:2:16)[39m: undefined: customer-portal-service
+[2022-08-13T07:20:13.716Z] [31merror[39m: [31muncaughtException: weathers is not defined[39m
+[31mReferenceError: weathers is not defined[39m
+[31m    at module.exports (/Users/ekibet/workspace/test/customer_portal_api/api/models/weathers.js:72:5)[39m
+[31m    at /Users/ekibet/workspace/test/customer_portal_api/api/models/index.js:42:52[39m
+[31m    at Array.forEach (<anonymous>)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/models/index.js:41:4)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1120:14)[39m
+[31m    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:998:32)[39m
+[31m    at Module._load (node:internal/modules/cjs/loader:839:12)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1022:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m: undefined: customer-portal-service
+[2022-08-13T07:20:42.803Z] [31merror[39m: [31muncaughtException: Sequelize is not defined[39m
+[31mReferenceError: Sequelize is not defined[39m
+[31m    at module.exports (/Users/ekibet/workspace/test/customer_portal_api/api/models/weathers.js:11:19)[39m
+[31m    at /Users/ekibet/workspace/test/customer_portal_api/api/models/index.js:42:52[39m
+[31m    at Array.forEach (<anonymous>)[39m
+[31m    at Object.<anonymous> (/Users/ekibet/workspace/test/customer_portal_api/api/models/index.js:41:4)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1120:14)[39m
+[31m    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:998:32)[39m
+[31m    at Module._load (node:internal/modules/cjs/loader:839:12)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1022:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m: undefined: customer-portal-service
