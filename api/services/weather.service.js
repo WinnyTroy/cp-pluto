@@ -33,6 +33,7 @@ exports.forecast = async (req, res, next) => {
                         })
                     }
                 }
+                console.log(`GET FORECAST WEATHER RESPONSE: ${response.statusCode}: data-> ${JSON.stringify(jsonDao)}`);
                 resolve(jsonDao)
             }
         });

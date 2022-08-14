@@ -17,7 +17,6 @@ if (config.use_env_variable) {
     dialect: config.dialect,
     logging: console.log,
     dialectOptions: {
-      useUTC: false,
       dateStrings: true,
       typeCast: function (field, next) {
         if (field.type === 'DATETIME') {
