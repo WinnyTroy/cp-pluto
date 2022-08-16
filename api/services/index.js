@@ -1,3 +1,4 @@
+
 module.exports = {
     customer: require('./customer.service'),
     sms: require('./sms.service'),
@@ -7,5 +8,6 @@ module.exports = {
     log: require('./log.service'),
     auth: require('./auth.service'),
     referral: require('./referral.service'),
-    crypto: require('./crypto.service')
+    crypto: require('./crypto.service'),
+    salesforce:require('./salesforce.service')
 }

@@ -93,6 +93,9 @@ app.use('/api/v1', require('./routes/auth'))
 app.use('/api/v1', require('./routes/referrals'))
 app.use('/api/v1', require('./routes/cryptos'))
 
+//defining my salesforce endpoint
+app.use('/api/v1', require('./routes/salesforce'))
+
 app.use(Sentry.Handlers.errorHandler());
 
 app.use(function (req, res, next) {
