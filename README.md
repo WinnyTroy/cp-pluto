@@ -28,14 +28,7 @@ sudo apt-get install npm
 3. Create mysql username and password
 
 ```bash
-CREATE USER '<ENTER_USERNAME>'@'localhost' IDENTIFIED BY '3EDdDngGWVStyM2fnakDDsgj6ctQ3t=';
-CREATE USER 'sunculture_api'@'localhost' IDENTIFIED BY'3EDdDngGWVStyM2fnakDDsgj6ctQ3t=';
-
-
-
-GRANT ALL PRIVILEGES ON _._ TO 'sunculture_api'@'localhost' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'sunculture_api'@'localhost' IDENTIFIED WITH "3EDdDngGWVStyM2fnakDDsgj6ctQ3t=";
-GRANT ALL PRIVILEGES ON *.* TO 'user_name'@'%' IDENTIFIED BY "Password";
+CREATE USER '<ENTER_USERNAME>'@'localhost' IDENTIFIED BY '<ENTER_PASSWORD>';
 
 
 GRANT ALL PRIVILEGES ON _._ TO '<ENTER_USERNAME>'@'localhost' WITH GRANT OPTION;

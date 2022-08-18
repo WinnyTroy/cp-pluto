@@ -3,7 +3,7 @@ const Joi = require('joi');
 module.exports = {
     schemas: {
         create: Joi.object().keys({
-            mobilePhone: Joi.string().required(),
+            mobilePhone: Joi.string().regex(/^[0-9]{10,12}$/).required(),
             firstName: Joi.string().required(),
             secondName: Joi.string().required(),
             company: Joi.string().required()
