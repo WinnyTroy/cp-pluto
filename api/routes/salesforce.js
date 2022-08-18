@@ -7,7 +7,8 @@ const controller = require('../controllers/index')
 const jwt = require('../helpers/jwt.helper');
 
 const Joi=require('../joi/salesforce.joi')
-// no need to check the token expiration just post the details straight away
+
+//salesforce route
 
 router.post('/newCustomer/salesforce',Joi.validateBody(Joi.schemas.create), controller.salesforce.create);
 
