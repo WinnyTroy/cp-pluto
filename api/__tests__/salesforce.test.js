@@ -10,10 +10,10 @@ describe('POST /api/v1/salesforce', function () {
         request(app)
             .post('/api/v1/newCustomer/salesforce')
             .send({
-                "FirstName":"Sarah",
-                "LastName": "Sindet",
-                "MobilePhone":"0721406307",
-                "Company": "SunCulture"
+                "firstName":"Sarah",
+                "lastName": "Sindet",
+                "mobilePhone":"0721406307",
+                "company": "SunCulture"
             })
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${process.env.TEST_BEARER_TOKEN}`)
