@@ -43,7 +43,11 @@ exports.getAccessToken = async () => {
 
 exports.create = async (req, res, next) => {
     const token = await getAccessToken()
-    console.log(token)
+    //condition to check the existence of a token
+    if(!token){
+        return ("No access_token generated")
+    }
+    else{
     return new Promise(async (resolve, reject) => {
         var options = {
             'method': 'POST',
@@ -74,6 +78,7 @@ exports.create = async (req, res, next) => {
             }
         });
     })
+}
 }
 
 
