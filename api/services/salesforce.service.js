@@ -18,7 +18,7 @@ exports.getAccessToken = async () => {
         })
         const options = {
             'method': 'POST',
-            'url': `${process.env.SF_URL}/services/oauth2/token?${data.toString()}`,
+            'url': `${process.env.SF_URL}${data.toString()}`,
 
         }
         request(options, async (error, response) => {
