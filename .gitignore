@@ -1,3 +1,5 @@
 api/coverage/**
 /api/coverage
 api/coverage/
+node_modules
+
