@@ -3,7 +3,7 @@ const request = require("supertest");
 const app = require("../app")
 
 /**
- * TEST POST REFERRALS
+ * TEST POST SALESFORCE
  */
 describe('POST /api/v1/salesforce', function () {
     it('test post salesforce service', function (done) {
