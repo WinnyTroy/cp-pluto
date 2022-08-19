@@ -3,8 +3,7 @@ const request = require('request');
 const log = require('./log.service');
 const redisClient = require('../helpers/redis.helper');
 const url = require('url');
-const { get } = require('https');
-
+const _this = this 
 
 
 exports.getAccessToken = async () => {
@@ -22,64 +21,61 @@ exports.getAccessToken = async () => {
 
         }
         request(options, async (error, response) => {
-            if(error){
+            if (error) {
                 reject(error)
             }
             const data = JSON.parse(response.body)
             console.log(data)
             if (data && data.access_token) {
-                // console.log(data.access_token)
+                console.log(data.access_token)
                 resolve(data.access_token)
             }
             else {
-                return ("No access_token")
+                reject("No access_token")
             }
         })
 
-    
+
     })
-    
+
 }
 
 exports.create = async (req, res, next) => {
-    const token = await getAccessToken()
-    //condition to check the existence of a token
-    if(!token){
-        return ("No access_token generated")
-    }
-    else{
     return new Promise(async (resolve, reject) => {
-        var options = {
-            'method': 'POST',
-            'url': process.env.SF_POST_URL,
-            'headers': { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "fields": {
-                    "FirstName": req.body.firstName,
-                    "LastName": req.body.lastName,
-                    "MobilePhone": req.body.mobilePhone,
-                    "Company": "SunCulture"
-                }
-            })
+        await _this.getAccessToken().then(async token => {
+            var options = {
+                'method': 'POST',
+                'url': process.env.SF_POST_URL,
+                'headers': { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "fields": {
+                        "FirstName": req.body.firstName,
+                        "LastName": req.body.lastName,
+                        "MobilePhone": req.body.mobilePhone,
+                        "Company": "SunCulture"
+                    }
+                })
 
-        };
-        await request(options, async (error, response) => {
-            if (error) {
-                console.error(error)
-                reject(error)
-            } else {
-                console.info(response.statusCode);
-                if (response.statusCode === 200) {
-                    resolve(response.body)
-
+            };
+            await request(options, async (error, response) => {
+                if (error) {
+                    console.error(error)
+                    reject(error)
                 } else {
-                    reject(response.body)
+                    console.info(response.statusCode);
+                    if (response.statusCode === 200) {
+                        resolve(response.body)
+
+                    } else {
+                        reject(response.body)
+                    }
                 }
-            }
-        });
+            });
+        }, async (error) => {
+            reject(error) })
     })
 }
-}
+
 
 
 
