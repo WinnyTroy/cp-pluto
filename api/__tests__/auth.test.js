@@ -3,10 +3,10 @@ const request = require("supertest");
 const app = require("../app")
 
 /**
- * TEST THE TOKEN VALIDATION
+ * TOKEN VALIDATION
  */
 describe('GET /api/v1/jwttoken/validation', function () {
-    it('responds with json', function (done) {
+    it('test token validity', function (done) {
         request(app)
             .get('/api/v1/jwttoken/validation')
             .set('Accept', 'application/json')

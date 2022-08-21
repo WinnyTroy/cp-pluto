@@ -3,15 +3,15 @@ const request = require("supertest");
 const app = require("../app")
 
 /**
- * TEST TICKETS POST
+ * RAISE THE TICKETS
  */
 describe('POST /api/v1/tickets', function () {
-    it('responds with json', function (done) {
+    it('test raised tickets', function (done) {
         request(app)
             .post('/api/v1/tickets')
             .send({
-                "customerName": "Sarah",
-                "subject": "Evans Subject",
+                "customerName": "Joe Doe",
+                "subject": "Payments issues",
                 "description": "Evans description",
                 "groupId": 2043001286617
             })
@@ -31,10 +31,10 @@ describe('POST /api/v1/tickets', function () {
 });
 
 /**
- * TEST TICKETS GET
+ * FETCH TICKETS RAISED
  */
 describe('POST /api/v1/tickets', function () {
-    it('responds with json', function (done) {
+    it('test fetched raised tickets', function (done) {
         request(app)
             .get('/api/v1/tickets')
             .set('Accept', 'application/json')
