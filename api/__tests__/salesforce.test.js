@@ -5,6 +5,7 @@ const app = require("../app")
 /**
  * TEST POST SALESFORCE
  */
+
  const data = new url.URLSearchParams({
     grant_type: process.env.SF_GRANT_TYPE,
     client_id: process.env.SF_CLIENT_ID,
@@ -12,6 +13,10 @@ const app = require("../app")
     password: process.env.SF_PASSWORD,
     username: process.env.SF_USERNAME
 })
+
+/**
+ * GET ACCESS_TOKEN
+ */
 
 describe('get access_token', function () {
     it('test get acess token', function (done) {
@@ -32,6 +37,9 @@ describe('get access_token', function () {
             });
     });
 });
+/**
+ * POST DATA TO SALESFORCE
+ */
 
 describe('POST /api/v1/newCustomer/salesforce', function () {
     it('test post salesforce service', function (done) {
