@@ -5,7 +5,35 @@ const app = require("../app")
 /**
  * TEST POST SALESFORCE
  */
-describe('POST /api/v1/salesforce', function () {
+ const data = new url.URLSearchParams({
+    grant_type: process.env.SF_GRANT_TYPE,
+    client_id: process.env.SF_CLIENT_ID,
+    client_secret: process.env.SF_CLIENT_SECRET,
+    password: process.env.SF_PASSWORD,
+    username: process.env.SF_USERNAME
+})
+
+describe('get access_token', function () {
+    it('test get acess token', function (done) {
+        request(app)
+            .post(`${process.env.SF_URL}${data.toString()}`)
+           
+            .set('Accept', 'application/json')
+            
+            .expect('Content-Type', /json/)
+            .expect(token)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+
+                expect(res.body).toBe("No acess_token");
+                return done();
+            });
+    });
+});
+
+describe('POST /api/v1/newCustomer/salesforce', function () {
     it('test post salesforce service', function (done) {
         request(app)
             .post('/api/v1/newCustomer/salesforce')
@@ -16,15 +44,15 @@ describe('POST /api/v1/salesforce', function () {
                 "company": "SunCulture"
             })
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${process.env.TEST_BEARER_TOKEN}`)
+            .set('Authorization', `Bearer ${token}`)
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(201)
             .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
 
-                expect(res.body.headers.status_code).toBe(200);
+                expect(res.body.headers.status_code).toBe(400);
                 return done();
             });
     });
