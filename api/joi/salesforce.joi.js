@@ -5,7 +5,7 @@ module.exports = {
         create: Joi.object().keys({
             mobilePhone: Joi.string().regex(/^[0-9]{10,12}$/).required(),
             firstName: Joi.string().required(),
-            secondName: Joi.string().required(),
+            lastName: Joi.string().required(),
             company: Joi.string().required()
         })
     },

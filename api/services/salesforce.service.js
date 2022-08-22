@@ -47,14 +47,14 @@ exports.create = async (req, res, next) => {
                 'method': 'POST',
                 'url': process.env.SF_POST_URL,
                 'headers': { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    "fields": {
-                        "FirstName": req.body.firstName,
-                        "LastName": req.body.lastName,
-                        "MobilePhone": req.body.mobilePhone,
-                        "Company": "SunCulture"
+                body: JSON.stringify(
+                    {
+                        "firstName": req.body.firstName,
+                        "lastName": req.body.lastName,
+                        "mobilePhone": req.body.mobilePhone,
+                        "company": "SunCulture"
                     }
-                })
+                )
 
             };
             await request(options, async (error, response) => {
@@ -63,7 +63,7 @@ exports.create = async (req, res, next) => {
                     reject(error)
                 } else {
                     console.info(response.statusCode);
-                    if (response.statusCode === 200) {
+                    if (response.statusCode === 201) {
                         resolve(response.body)
 
                     } else {

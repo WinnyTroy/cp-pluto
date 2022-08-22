@@ -30,9 +30,9 @@ router.post('/newCustomer/salesforce',Joi.validateBody(Joi.schemas.create), cont
  *                          firstName:
  *                              type: string
  *                              description: 'Customer First Name' 
- *                          secondName:
+ *                          lastName:
  *                              type: string
- *                              description: 'Customers Second Name'
+ *                              description: 'Customers Last Name'
  *                          mobilePhone:
  *                              type: string
  *                              description: 'Customers PhoneNumber'
