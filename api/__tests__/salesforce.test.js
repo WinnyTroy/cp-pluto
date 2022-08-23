@@ -19,7 +19,7 @@ const app = require("../app")
  */
 
 describe('get access_token', function () {
-    it('test get acess token', function (done) {
+    it('test the get acess token', function (done) {
         request(app)
             .post(`${process.env.SF_URL}${data.toString()}`)
            
