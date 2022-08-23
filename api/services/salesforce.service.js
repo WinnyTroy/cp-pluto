@@ -1,7 +1,5 @@
 require('dotenv').config()
 const request = require('request');
-const log = require('./log.service');
-const redisClient = require('../helpers/redis.helper');
 const url = require('url');
 const _this = this 
 

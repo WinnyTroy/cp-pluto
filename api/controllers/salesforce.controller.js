@@ -7,7 +7,7 @@ exports.create = async (req, res, next) => {
     try {
         await service.salesforce.create(req, res, next).then(async results => {
             console.log("api",JSON.stringify(results))
-            return helpers.response.successResponse(res, "SignUp  was sucessful.")
+            return helpers.response.successResponse(res, "SignUp  was successful.")
             ;
         }, async error => {
             console.error(JSON.stringify(error))
