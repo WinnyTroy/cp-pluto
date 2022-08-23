@@ -17,9 +17,7 @@ router.post('/newCustomer/salesforce',Joi.validateBody(Joi.schemas.create), cont
  *      post:
  *          summary: Post new Customer
  *          description: Register a new customer
- *          tags: [Salesforce]
- *          security:
- *              - bearerAuth: []     
+ *          tags: [Salesforce]    
  *          requestBody:
  *            required: true
  *            content:
