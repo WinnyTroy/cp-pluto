@@ -1,6 +1,6 @@
 {
-  "name": "sc-backend",
-  "version": "0.0.0",
+  "name": "customer_backend",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -30,7 +30,8 @@
     "request": "^2.88.2",
     "supertest": "^6.2.3",
     "swagger-jsdoc": "^6.2.1",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "winston": "^3.8.1"
   },
   "devDependencies": {
     "sequelize": "^6.19.0",

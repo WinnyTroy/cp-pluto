@@ -10,7 +10,7 @@ let _this = this
 exports.check = async (req) => {
     return new Promise(async (resolve, reject) => {
         let code = await helpers.utility.randomNumber(4)
-        console.info(`[OTP GENERATED]:  code is ${code}`)
+        helpers.logger.child({ context: { payload: req.body } }).info(`OTP code generated: ${code}`)
         _this.queryCustomerInfo(req.body.query).then(async result => {
             await models.otp.findAll({ where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async customer => {
                 if (parseInt(customer.length) > 0) {
@@ -18,7 +18,7 @@ exports.check = async (req) => {
                         await sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` }).then(async () => {
                             resolve({ msisdn: result.phoneNumber })
                         }, async err => {
-                            console.error(err)
+                            helpers.logger.child({ context: { response: err } }).error(`Something went wrong trying to update otp code`)
                             reject('Request failed. We are unable to send OTP code to your device')
                         })
                     }, async err => {
@@ -33,8 +33,7 @@ exports.check = async (req) => {
                         code: code,
                         expiry: process.env.JWT_EXPIRATION_TIME,
                         status: "0"
-                    }).then(async record => {
-                        console.log(record)
+                    }).then(async () => {
                         await sms.sendSMS({ msisdn: result.phoneNumber, message: `Your SunCulture Activation code is: ${code}` }).then(async () => {
                             resolve({ msisdn: result.phoneNumber })
                         }, async err => {
@@ -74,16 +73,22 @@ exports.queryCustomerInfo = async (value) => {
             } else {
                 let responseBody = JSON.parse(response.body)
                 console.info(`[EXTERNAL API CALL RESPONSE] [customers.accounts]: ${JSON.stringify(responseBody)}`)
-                if (responseBody.data.length > 0) {
-                    resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber, status: responseBody.data[0].status })
-                } else {
-                    if (responseBody.status === true) {
-                        console.info(`No Customer Account found for: ${value}`)
-                        reject("No Account info found")
+                try {
+                    if (responseBody.data.length > 0) {
+                        resolve({ phoneNumber: responseBody.data[0].phoneNumber, nationalID: responseBody.data[0].identificationNumber, status: responseBody.data[0].status })
                     } else {
-                        console.error(responseBody.err)
-                        reject(responseBody.err)
+                        if (responseBody.status === true) {
+                            console.info(`No Customer Account found for: ${value}`)
+                            helpers.logger.info("No customer account found")
+                            reject("No Account info found")
+                        } else {
+                            console.error(responseBody.err)
+                            reject(responseBody.err)
+                        }
                     }
+                } catch (e) {
+                    console.error(e)
+                    reject(`Request failed. We are not able to complete your request at this time. Try again later.`)
                 }
             }
         });
@@ -107,18 +112,23 @@ exports.fetchCustomersAccountDetails = async (req, res) => {
             } else {
                 let responseBody = JSON.parse(response.body)
                 console.info(`[EXTERNAL API CALL RESPONSE] [customer.account.details]: ${JSON.stringify(responseBody)}`)
-                if (responseBody.status === true) {
-                    await _this.queryCustomerInfo(res.JWTDecodedData.nationalID).then(async info => {
-                        console.info(info)
-                        responseBody.data['status'] = info.status
-                        resolve(responseBody)
-                    }, async err => {
-                        console.error(err)
-                        reject(err)
-                    })
-                } else {
-                    console.error(responseBody.err)
-                    reject(responseBody.err)
+                try {
+                    if (responseBody.status === true) {
+                        await _this.queryCustomerInfo(res.JWTDecodedData.nationalID).then(async info => {
+                            helpers.logger.child({ context: info }).info("Account info found")
+                            responseBody.data['status'] = info.status
+                            resolve(responseBody)
+                        }, async err => {
+                            console.error(err)
+                            reject(err)
+                        })
+                    } else {
+                        console.error(responseBody.err)
+                        reject(responseBody.err)
+                    }
+                } catch (e) {
+                    console.error(e)
+                    reject("Request failed. We are unable to complete your request at this time. Try again.")
                 }
             }
         });

@@ -1,5 +1,6 @@
 api/coverage/**
 /api/coverage
 api/coverage/
-node_modules
-
+api/node_modules/**
+/api/node_modules
+api/node_modules/

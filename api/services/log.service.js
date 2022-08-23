@@ -16,9 +16,9 @@ exports.create = async (json) => {
             resourcePath: json.resourcePath,
             method: json.method
         }).then(async result => {
-            console.info(JSON.stringify(result))
+            resolve(JSON.stringify(result))
         }, async err => {
-            console.error(err)
+            reject(err)
         })
     })
 }

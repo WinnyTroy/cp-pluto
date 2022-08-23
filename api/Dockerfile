@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:14.17.1-alpine3.13 AS builder
 
 RUN mkdir -p /usr/src/ms-sunculture-api
 
@@ -19,4 +19,5 @@ RUN npm install
 EXPOSE 3303
 
 CMD ["pm2-runtime", "./ecosystem.config.js", "--env", "production", "--formatted"]
+
 

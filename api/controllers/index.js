@@ -6,5 +6,6 @@ module.exports = {
     auth: require('./auth.controller'),
     referral: require('./referral.controller'),
     crypto: require('./crypto.controller'),
-    salesforce:require('./salesforce.controller')
+    salesforce:require('./salesforce.controller'),
+    weather: require('./weather.controller')
 }
