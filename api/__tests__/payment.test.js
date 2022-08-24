@@ -3,10 +3,10 @@ const request = require("supertest");
 const app = require("../app")
 
 /**
- * TEST FETCH CUSTOMER PAYMENT HISTORY
+ * FETCH CUSTOMER PAYMENT HISTORY
  */
 describe('POST /api/v1/payment-history', function () {
-    it('responds with json', function (done) {
+    it('test fetch payment history', function (done) {
         request(app)
             .get('/api/v1/payment-history')
             .set('Accept', 'application/json')

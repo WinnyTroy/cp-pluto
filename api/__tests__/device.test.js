@@ -7,7 +7,7 @@ const app = require("../app")
  * code 202 for max limit reached else 200 success verification
  */
 describe('POST /api/v1/devices/verify', function () {
-    it('responds with json', function (done) {
+    it('test device verification', function (done) {
         request(app)
             .post('/api/v1/devices/verify')
             .send({ deviceId: "869640056842126" })
