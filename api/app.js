@@ -94,6 +94,9 @@ app.use('/api/v1', require('./routes/referrals'))
 app.use('/api/v1', require('./routes/cryptos'))
 app.use('/api/v1', require('./routes/weathers'))
 
+//defining my salesforce route
+app.use('/api/v1', require('./routes/salesforce'))
+
 app.use(Sentry.Handlers.errorHandler());
 
 app.use(function (req, res, next) {

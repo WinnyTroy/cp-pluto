@@ -33,6 +33,7 @@ CREATE USER '<ENTER_USERNAME>'@'localhost' IDENTIFIED BY '<ENTER_PASSWORD>';
 
 GRANT ALL PRIVILEGES ON _._ TO '<ENTER_USERNAME>'@'localhost' WITH GRANT OPTION;
 
+
 ```
 
 4. Database migration
