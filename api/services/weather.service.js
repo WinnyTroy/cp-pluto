@@ -28,6 +28,7 @@ exports.forecast = async (req, res, next) => {
                         jsonDao.push({
                             dt: dateformat,
                             weather: listData[i].weather[0].main, description: listData[i].weather[0].description,
+                            icon: `http://openweathermap.org/img/w/${listData[i].weather[0].icon}.png`,
                             temp: listData[i].main.temp, temp_min: listData[i].main.temp_min, temp_max: listData[i].main.temp_max,
                             pressure: listData[i].main.pressure, humidity: listData[i].main.humidity, clouds: listData[i].clouds.all
                         })
@@ -58,6 +59,7 @@ exports.current = async (req, res, next) => {
                     dt: moment.unix(parseData.dt).format("YYYY-MM-DD HH:mm:ss"),
                     weather: parseData.weather[0].main,
                     description: parseData.weather[0].description,
+                    icon: `http://openweathermap.org/img/w/${parseData.weather[0].icon}.png`,
                     city: parseData.name,
                     country: parseData.sys.country,
                     wind: parseData.wind.speed,
