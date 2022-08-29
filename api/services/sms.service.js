@@ -3,6 +3,11 @@ const request = require('request');
 const { v4: uuidv4 } = require('uuid');
 const models = require('../models/index')
 
+/**
+ * 
+ * @param {AT SMS INTEGRATION} json 
+ * @returns 
+ */
 exports.sendSMS = async (json) => {
     return new Promise(async (resolve, reject) => {
         var options = {
@@ -54,5 +59,42 @@ exports.sendSMS = async (json) => {
                 }
             }
         })
+    })
+}
+
+/**
+ * INFOBIP SMS SENDING
+ */
+exports.sendInfobipSms = async (json) => {
+    return new Promise(async (resolve, reject) => {
+        var options = {
+            'method': 'POST',
+            'url': process.env.INFOBIP_SEND_SMS_URL,
+            'headers': {
+                'X-api-key': process.env.INFOBIP_API_KEY,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "languageId": 1,
+                "text": json.message,
+                "destinations": [
+                    json.msisdn
+                ]
+            })
+        };
+        await request(options, async (error, response) => {
+            if (error) {
+                console.error(error)
+                reject(error)
+            } else {
+                console.log(response.body);
+                let smsResponse = JSON.parse(response.body)
+                if (smsResponse.status === true) {
+                    resolve(response.body)
+                } else {
+                    reject(response.body)
+                }
+            }
+        });
     })
 }
