@@ -50,7 +50,8 @@ exports.create = async (req, res, next) => {
                         "firstName": req.body.firstName,
                         "lastName": req.body.lastName,
                         "mobilePhone": req.body.mobilePhone,
-                        "company": "SunCulture"
+                        "company": "SunCulture",
+                        "leadSource": "Customer Portal"
                     }
                 )
 
