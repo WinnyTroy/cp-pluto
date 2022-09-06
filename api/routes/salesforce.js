@@ -34,9 +34,6 @@ router.post('/newCustomer/salesforce',Joi.validateBody(Joi.schemas.create), cont
  *                          mobilePhone:
  *                              type: string
  *                              description: 'Customers PhoneNumber'
- *                          company: 
- *                              type: string
- *                              description: 'Customers Company'
  *          responses:
  *              401:
  *                  description: 'Authorization error'
