@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: false,
         },
+        firebaseToken: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            unique: false,
+        },
         dv_count: {
             type: DataTypes.STRING(10),
             allowNull: false,

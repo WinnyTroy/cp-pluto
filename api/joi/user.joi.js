@@ -3,7 +3,8 @@ const Joi = require('joi');
 module.exports = {
     schemas: {
         create: Joi.object().keys({
-            query: Joi.number().required()
+            query: Joi.number().required(),
+            firebaseToken: Joi.string().required()
         }),
 
         verify: Joi.object().keys({
