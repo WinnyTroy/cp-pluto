@@ -15,7 +15,8 @@ describe('POST /api/v1/newCustomer/salesforce', function () {
                 "firstName":"Sara",
                 "lastName": "Auma",
                 "mobilePhone":"0737406123",
-                "company": "SunCulture"
+                "company": "SunCulture",
+                "leadSource":"Customer Portal"
             })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
