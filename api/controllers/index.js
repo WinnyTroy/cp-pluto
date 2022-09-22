@@ -4,7 +4,7 @@ module.exports = {
     device: require('./device.controller'),
     payment: require('./payment.controller'),
     auth: require('./auth.controller'),
-    referral: require('./salesforce.controller'),
+    referral: require('./referral.controller'),
     crypto: require('./crypto.controller'),
     salesforce:require('./salesforce.controller'),
     weather: require('./weather.controller')

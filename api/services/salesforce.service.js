@@ -51,14 +51,7 @@ exports.create = async (req, res, next) => {
                         "lastName": req.body.lastName,
                         "mobilePhone": req.body.mobilePhone,
                         "company": "SunCulture",
-                        "leadSource": "Customer Portal",
-                        "fullName": req.body.fullName,
-                        "phoneNumber": req.body.phoneNumber,
-                        "location": req.body.location,
-                        "waterSource": req.body.waterSource,
-                        "productInterested": req.body.productInterested,
-                        "referredBy": res.JWTDecodedData.otpId
-
+                        "leadSource": "Customer Portal"
 
                     }
                 )
