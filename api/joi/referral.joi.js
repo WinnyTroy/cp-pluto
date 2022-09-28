@@ -8,7 +8,9 @@ module.exports = {
             mobilePhone: Joi.string().required(),
             Location__c: Joi.string().required(),
             Water_Source__c: Joi.string().valid('Yes', 'No').required(),
-            Customer_Product_of_Interest__c: Joi.string().required()
+            Customer_Product_of_Interest__c: Joi.string().required(),
+            Purchase_Date__c:Joi.string().valid('Now', 'Two weeks', 'Two months', 'Later').required(),
+            Follow_Up_Date__c:Joi.string().required(),
         })
     },
 

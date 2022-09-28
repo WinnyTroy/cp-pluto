@@ -27,6 +27,8 @@ const request = require('request');
 exports.create = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
         await getAccessToken().then(async token => {
+            let nationalID = res.JWTDecodedData.nationalID
+
             var options = {
                 'method': 'POST',
                 'url': process.env.SF_POST_URL,
@@ -36,12 +38,18 @@ exports.create = async (req, res, next) => {
                         "firstName": req.body.firstName,
                         "lastName": req.body.lastName,
                         "mobilePhone":req.body.phoneNumber,
+                        "ID_Number__c":req.body.idNumber,
                         "Location__c": req.body.location,
                         "Water_Source__c":req.body.waterSource,
                         "Customer_Product_of_Interest__c":req.body.productInterested,
+                        "Purchase_Date__c":req.body.purchase_date,
+                        "Referral_Name__c":req.body.customerName,
+                        "Referral_Phone_Number__c":res.JWTDecodedData.phoneNumber,
+                        "Referral_ID__c":nationalID,
+                        //default fields
+                        "Preferred_Language__c":"English",
                         "Company":"SunCulture",
-                        "leadSource":"Customer Portal"
-                        // "referredBy": res.JWTDecodedData.otpId
+                        "leadSource":"Customer Portal",
                     }
                 )
 
