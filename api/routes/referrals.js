@@ -51,7 +51,7 @@ const jwt = require('../helpers/jwt.helper')
  *                  description: 'Not found'
  */
 
-router.post('/referrals', Joi.validateBody(Joi.schemas.create), controller.referral.create);
+router.post('/referrals', Joi.validateBody(Joi.schemas.create), jwt.checkAuth, controller.referral.create);
 
 /**
  * @swagger
