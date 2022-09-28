@@ -46,7 +46,7 @@ exports.create = async (req, res, next) => {
                         "Referral_Name__c":req.body.customerName,
                         "Referral_Phone_Number__c":res.JWTDecodedData.phoneNumber,
                         "Referral_ID__c":nationalID,
-                        //default fields
+                        //default
                         "Preferred_Language__c":"English",
                         "Company":"SunCulture",
                         "leadSource":"Customer Portal",

@@ -5,7 +5,7 @@ module.exports = {
         create: Joi.object().keys({
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
-            mobilePhone: Joi.string().required(),
+            phoneNumber: Joi.string().required(),
             Location__c: Joi.string().required(),
             Water_Source__c: Joi.string().valid('Yes', 'No').required(),
             Customer_Product_of_Interest__c: Joi.string().required(),
