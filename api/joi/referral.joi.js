@@ -3,11 +3,12 @@ const Joi = require('joi');
 module.exports = {
     schemas: {
         create: Joi.object().keys({
-            MobilePhone: Joi.string().required(),
-            fullReferralName: Joi.string().required(),
-            referralLocation: Joi.string().required(),
-            referralWaterSource: Joi.string().valid('Yes', 'No').required(),
-            referralProductInterested: Joi.string().required()
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            mobilePhone: Joi.string().required(),
+            Location__c: Joi.string().required(),
+            Water_Source__c: Joi.string().valid('Yes', 'No').required(),
+            Customer_Product_of_Interest__c: Joi.string().required()
         })
     },
 

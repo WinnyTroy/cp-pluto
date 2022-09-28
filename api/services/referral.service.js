@@ -33,11 +33,14 @@ exports.create = async (req, res, next) => {
                 'headers': { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {   
-                        "fullReferralName": req.body.fullName,
-                        "MobilePhone": req.body.phoneNumber,
-                        "referralLocation": req.body.location,
-                        "referralWaterSource": req.body.waterSource,
-                        "referralProductInterested": req.body.productInterested,
+                        "firstName": req.body.firstName,
+                        "lastName": req.body.lastName,
+                        "mobilePhone":req.body.phoneNumber,
+                        "Location__c": req.body.location,
+                        "Water_Source__c":req.body.waterSource,
+                        "Customer_Product_of_Interest__c":req.body.productInterested,
+                        "Company":"SunCulture",
+                        "leadSource":"Customer Portal"
                         // "referredBy": res.JWTDecodedData.otpId
                     }
                 )
