@@ -27,6 +27,11 @@ module.exports = {
                 allowNull: false,
                 unique: false,
             },
+            firebaseToken: {
+                type: Sequelize.TEXT,
+                allowNull: true,
+                unique: false,
+            },
             dv_count: {
                 type: Sequelize.STRING(10),
                 allowNull: false,

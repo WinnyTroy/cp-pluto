@@ -24,7 +24,10 @@ const jwt = require('../helpers/jwt.helper')
  *                      properties:
  *                          query:
  *                              type: string
- *                              description: 'Customer National ID Number'      
+ *                              description: 'Customer National ID Number'
+ *                          firebaseToken:
+ *                              type: string
+ *                              description: 'Customer Firebase Token'       
  *          responses:
  *              401:
  *                  description: 'Authorization error'

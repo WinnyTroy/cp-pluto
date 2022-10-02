@@ -9,6 +9,7 @@ module.exports = {
     auth: require('./auth.service'),
     referral: require('./referral.service'),
     crypto: require('./crypto.service'),
-    salesforce:require('./salesforce.service'),
-    weather: require('./weather.service')
+    salesforce: require('./salesforce.service'),
+    weather: require('./weather.service'),
+    fcm: require('./fcm.service')
 }
