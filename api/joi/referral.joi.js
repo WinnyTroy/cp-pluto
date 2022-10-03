@@ -6,11 +6,12 @@ module.exports = {
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
             phoneNumber: Joi.string().required(),
-            Location__c: Joi.string().required(),
-            Water_Source__c: Joi.string().valid('Yes', 'No').required(),
-            Customer_Product_of_Interest__c: Joi.string().required(),
-            Purchase_Date__c:Joi.string().valid('Now', 'Two weeks', 'Two months', 'Later').required(),
-            Follow_Up_Date__c:Joi.string().required(),
+            location: Joi.string().required(),
+            waterSource: Joi.string().valid('Yes', 'No').required(),
+            productInterested: Joi.string().required(),
+            purchaseDate: Joi.string().valid('Now', 'Two weeks', 'Two months', 'Later').required(),
+            customerName: Joi.string().required(),
+            followUpDate: Joi.string().required(),
         })
     },
 
