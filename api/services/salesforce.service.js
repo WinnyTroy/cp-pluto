@@ -1,7 +1,7 @@
 require('dotenv').config()
 const request = require('request');
 const url = require('url');
-const _this = this 
+const _this = this
 
 
 exports.getAccessToken = async () => {
@@ -45,17 +45,13 @@ exports.create = async (req, res, next) => {
                 'method': 'POST',
                 'url': process.env.SF_POST_URL,
                 'headers': { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify(
-                    {
-                        "firstName": req.body.firstName,
-                        "lastName": req.body.lastName,
-                        "mobilePhone": req.body.mobilePhone,
-                        "company": "SunCulture",
-                        "leadSource": "Customer Portal"
-
-                    }
-                )
-
+                body: JSON.stringify({
+                    "firstName": req.body.firstName,
+                    "lastName": req.body.lastName,
+                    "mobilePhone": req.body.mobilePhone,
+                    "company": "SunCulture",
+                    "leadSource": "Customer Portal"
+                })
             };
             await request(options, async (error, response) => {
                 if (error) {
@@ -72,7 +68,8 @@ exports.create = async (req, res, next) => {
                 }
             });
         }, async (error) => {
-            reject(error) })
+            reject(error)
+        })
     })
 }
 
