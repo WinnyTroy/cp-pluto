@@ -17,7 +17,7 @@ exports.check = async (req) => {
                 if (parseInt(customer.length) > 0) {
                     await models.otp.update({ code: code, firebaseToken: req.body.firebaseToken, updatedAt: moment().format('YYYY-MM-DD HH:mm:ss') }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async () => {
                         const globalMessage = `Your SunCulture Activation code is: ${code}`
-                        if (req.body.firebaseToken !== 'NULL') {
+                        if (req.body.firebaseToken !== 'NULL' && typeof (req.body.firebaseToken) !== 'undefined') {
                             await fmc.sendFcmNotification(req.body.firebaseToken, 'OTP Code', globalMessage).then(async () => {
                                 resolve({ msisdn: result.phoneNumber })
                             }, async err => {

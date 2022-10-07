@@ -4,7 +4,7 @@ module.exports = {
     schemas: {
         create: Joi.object().keys({
             query: Joi.number().required(),
-            firebaseToken: Joi.string().required()
+            firebaseToken: Joi.string()
         }),
 
         verify: Joi.object().keys({
