@@ -23,9 +23,12 @@ const jwt = require('../helpers/jwt.helper')
  *                  schema:
  *                      type: object
  *                      properties:
- *                          fullName:
+ *                          firstName:
  *                              type: string
- *                              description: 'fullName' 
+ *                              description: 'firstName' 
+ *                          lastName:
+ *                              type: string
+ *                              description: 'lastName'
  *                          phoneNumber:
  *                              type: string
  *                              description: 'Referral Phone Number'
@@ -38,6 +41,15 @@ const jwt = require('../helpers/jwt.helper')
  *                          productInterested: 
  *                              type: string
  *                              description: 'Product of Interest'
+ *                          purchaseDate:
+ *                              type: string
+ *                              description: 'purchaseDate'
+ *                          customerName: 
+ *                              type: string
+ *                              description: 'customerName'
+ *                          followUpDate:
+ *                              type: string
+ *                              description: 'followUpDate'
  *          responses:
  *              401:
  *                  description: 'Authorization error'
