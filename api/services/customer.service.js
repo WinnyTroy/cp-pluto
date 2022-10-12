@@ -3,7 +3,6 @@ const models = require('../models/index');
 const { v4: uuidv4 } = require('uuid');
 const request = require('request');
 const sms = require('./sms.service')
-const fmc = require('./fcm.service')
 const helpers = require('../helpers/index')
 const moment = require('moment')
 let _this = this
@@ -17,21 +16,12 @@ exports.check = async (req) => {
                 if (parseInt(customer.length) > 0) {
                     await models.otp.update({ code: code, firebaseToken: req.body.firebaseToken, updatedAt: moment().format('YYYY-MM-DD HH:mm:ss') }, { where: { phoneNumber: result.phoneNumber, nationalID: result.nationalID } }).then(async () => {
                         const globalMessage = `Your SunCulture Activation code is: ${code}`
-                        if (req.body.firebaseToken !== 'NULL' && typeof (req.body.firebaseToken) !== 'undefined') {
-                            await fmc.sendFcmNotification(req.body.firebaseToken, 'OTP Code', globalMessage).then(async () => {
-                                resolve({ msisdn: result.phoneNumber })
-                            }, async err => {
-                                helpers.logger.child({ context: { response: err } }).error(`Something went wrong trying to update otp code`)
-                                reject('Request failed. We are unable to send OTP code to your device')
-                            })
-                        } else {
-                            await sms.sendInfobipSms({ msisdn: result.phoneNumber, message: globalMessage }).then(async () => {
-                                resolve({ msisdn: result.phoneNumber })
-                            }, async err => {
-                                helpers.logger.child({ context: { response: err } }).error(`Something went wrong trying to update otp code`)
-                                reject('Request failed. We are unable to send OTP code to your device')
-                            })
-                        }
+                        await sms.sendInfobipSms({ msisdn: result.phoneNumber, message: globalMessage }).then(async () => {
+                            resolve({ msisdn: result.phoneNumber })
+                        }, async err => {
+                            helpers.logger.child({ context: { response: err } }).error(`Something went wrong trying to update otp code`)
+                            reject('Request failed. We are unable to send OTP code to your device')
+                        })
                     }, async err => {
                         console.error(err)
                         reject("Request failed. We are unable to update your OTP code. Please try again later")
@@ -47,21 +37,12 @@ exports.check = async (req) => {
                         status: "0"
                     }).then(async () => {
                         const globalMessage = `Your SunCulture Activation code is: ${code}`
-                        if (req.body.firebaseToken !== 'NULL') {
-                            await fmc.sendFcmNotification(req.body.firebaseToken, 'OTP Code', globalMessage).then(async () => {
-                                resolve({ msisdn: result.phoneNumber })
-                            }, async err => {
-                                helpers.logger.child({ context: { response: err } }).error(`Something went wrong trying to update otp code`)
-                                reject('Request failed. We are unable to send OTP code to your device')
-                            })
-                        } else {
-                            await sms.sendInfobipSms({ msisdn: result.phoneNumber, message: globalMessage }).then(async () => {
-                                resolve({ msisdn: result.phoneNumber })
-                            }, async err => {
-                                console.error(err)
-                                reject('Request failed. We are unable to send OTP code to your device')
-                            })
-                        }
+                        await sms.sendInfobipSms({ msisdn: result.phoneNumber, message: globalMessage }).then(async () => {
+                            resolve({ msisdn: result.phoneNumber })
+                        }, async err => {
+                            console.error(err)
+                            reject('Request failed. We are unable to send OTP code to your device')
+                        })
                     }, async err => {
                         console.error(err)
                         reject("Request failed. We are unable to update your OTP code. Please try again later")
