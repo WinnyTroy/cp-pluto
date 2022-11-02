@@ -8,11 +8,11 @@ module.exports = {
             phoneNumber: Joi.string().required(),
             idNumber: Joi.string(),
             location: Joi.string().required(),
-            waterSource: Joi.string().valid('Yes', 'No').required(),
+            waterSource: Joi.string().required(),
             productInterested: Joi.string().required(),
-            purchaseDate: Joi.string().valid('Now', 'Two weeks', 'Two months', 'Later').required(),
+            purchaseDate: Joi.string().regex(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/).required(),
             customerName: Joi.string().required(),
-            followUpDate: Joi.string().required(),
+            followUpDate: Joi.string().regex(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/).required(),
         })
     },
 

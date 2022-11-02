@@ -1,6 +1,7 @@
 const models = require('../models/index');
 const { getAccessToken } = require('./salesforce.service');
 const request = require('request');
+const { v4: uuidv4 } = require('uuid');
 
 exports.create = async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
@@ -35,7 +36,19 @@ exports.create = async (req, res, next) => {
                     console.info(response.body)
                     let jsonBody = JSON.parse(response.body)
                     if (response.statusCode === 201) {
-                        resolve(response.body)
+                        await models.referrals.create({
+                            referralId: uuidv4(),
+                            fullName: req.body.firstName + " " + req.body.lastName,
+                            phoneNumber: req.body.phoneNumber,
+                            location: req.body.location,
+                            waterSource: req.body.waterSource,
+                            productInterested: req.body.productInterested,
+                            referredBy: res.JWTDecodedData.otpId
+                        }).then(async refs => {
+                            resolve(response.body)
+                        }, async err => {
+                            reject(err)
+                        })
                     } else {
                         reject(jsonBody[0].message)
                     }
