@@ -8,6 +8,7 @@ on:
     branches: [develop]
 
   pull_request:
+    types: [closed]
     branches: [develop]
 
 jobs:
@@ -41,7 +42,7 @@ jobs:
   Deploy-to-Test-env:
     needs: CI
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' && github.event.pull_request.merged == 'true'
+    if: github.event.pull_request.merged == true
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
