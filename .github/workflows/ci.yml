@@ -55,27 +55,8 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: dir
-        run: |
-          pwd
-          ls
-      
-      - name: cd
-        run: |
-          cd ../
-          pwd
-          ls
-      
-      - name: again
-        run: |
-          cd ./../../
-          pwd
-          ls
-      
-      - name: again
-        run: |
-          cd ../cp-pluto
-          ls
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -83,8 +64,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.STAGE_ECR_REPOSITORY }}
           IMAGE_TAG: dev-${{ github.sha }}
+        uses: docker/build-push-action@v3
+        with:
+            context: ./api
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
           docker push $ECR_REGISTRY/$STAGE_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-        working-directory: ./../api/
