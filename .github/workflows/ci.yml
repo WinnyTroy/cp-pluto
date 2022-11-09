@@ -67,7 +67,13 @@ jobs:
         uses: docker/build-push-action@v3
         with:
             context: ./api
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
-          docker push $ECR_REGISTRY/$STAGE_ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+            file: Dockerfile
+            platforms: linux/amd64
+            push: true
+            tags: |
+              repo:${{ github.sha }}
+              repo:latest
+        # run: |
+        #   docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
+        #   docker push $ECR_REGISTRY/$STAGE_ECR_REPOSITORY:$IMAGE_TAG
+        #   echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
