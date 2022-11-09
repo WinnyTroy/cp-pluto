@@ -58,45 +58,24 @@ jobs:
       - name: dir
         run: |
           pwd
-
-      - name: ls
-        run: |
           ls
       
       - name: cd
         run: |
           cd ../
-      
-      - name: dir
-        run: |
           pwd
-
-      - name: ls
-        run: |
           ls
       
-      - name: cd
+      - name: again
         run: |
           cd ./../
-      
-      - name: dir
-        run: |
           pwd
-
-      - name: ls
-        run: |
           ls
       
-      - name: cd
+      - name: again
         run: |
           cd ./../../
-      
-      - name: dir
-        run: |
           pwd
-
-      - name: ls
-        run: |
           ls
 
       - name: Build, tag, and push image to Amazon ECR
