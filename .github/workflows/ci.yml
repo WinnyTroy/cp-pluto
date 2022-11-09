@@ -8,7 +8,7 @@ on:
     branches: [develop]
 
   pull_request:
-    types: [closed]
+    types: [opened, closed]
     branches: [develop]
 
 jobs:
@@ -62,6 +62,6 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.STAGE_ECR_REPOSITORY }}
           IMAGE_TAG: dev-${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./../api/Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f api/Dockerfile .
           docker push $ECR_REGISTRY/$STAGE_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
