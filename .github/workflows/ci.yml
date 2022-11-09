@@ -67,7 +67,6 @@ jobs:
         with:
             context: ./api
             file: Dockerfile
-            platforms: linux/amd64
             push: true
             tags: |
               repo:dev-${{ github.sha }}
