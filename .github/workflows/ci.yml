@@ -68,14 +68,13 @@ jobs:
       
       - name: again
         run: |
-          cd ./../
+          cd ./../../
           pwd
           ls
       
       - name: again
         run: |
-          cd ./../../
-          pwd
+          cd ../cp-pluto
           ls
 
       - name: Build, tag, and push image to Amazon ECR
