@@ -75,6 +75,6 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.STAGE_ECR_REPOSITORY }}
           IMAGE_TAG: dev-${{ github.sha }}
         run: |
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag cp-pluto-stage:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
