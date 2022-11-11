@@ -60,22 +60,21 @@ jobs:
         with:
             context: ./api
             file: Dockerfile
-            push: true
+            push: false
             tags: |
-              repo:dev-${{ github.sha }}
-              repo:latest
+              cp-pluto:dev-${{ github.sha }}
+              cp-pluto:latest
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Push image to Amazon ECR
-        id: build-image
+        id: push-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           IMAGE_TAG: dev-${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./api/Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
