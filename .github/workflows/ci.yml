@@ -57,13 +57,17 @@ jobs:
       - name: Build and tag docker image
         id: build-image
         uses: docker/build-push-action@v3
+        env:
+          AWS_ACCOUNT: ${{ secrets.SC_AWS_ACCOUNT }}
+          AWS-REGION: ${{ secrets.STAGE_AWS_REGION }}
+          ECR_REPOSITORY: ${{ secrets.STAGE_ECR_REPOSITORY }}
         with:
             context: ./api
             file: ./api/Dockerfile
             push: false
             tags: |
-              cp-pluto:dev-${{ github.sha }}
-              cp-pluto:latest
+              cp-pluto-stage:dev-${{ github.sha }}
+              $AWS_ACCOUNT.dkr.ecr.$AWS-REGION.amazonaws.com/$ECR_REPOSITORY:latest
 
       - name: Login to Amazon ECR
         id: login-ecr
