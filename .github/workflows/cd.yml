@@ -32,8 +32,7 @@ jobs:
           file: ./api/Dockerfile
           push: false
           tags: |
-            cp-pluto-stage:dev-${{ github.sha }}
-            $AWS_ACCOUNT.dkr.ecr.$AWS-REGION.amazonaws.com/$ECR_REPOSITORY:latest
+              cp-pluto:latest
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -46,5 +45,6 @@ jobs:
         ECR_REPOSITORY: ${{ secrets.PROD_ECR_REPOSITORY }}
         IMAGE_TAG: dev-${{ github.sha }}
       run: |
+        docker tag cp-pluto:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
