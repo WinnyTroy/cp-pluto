@@ -1,0 +1,50 @@
+name: CD Pipeline
+
+on:  
+  push:
+    tags:
+      - '*'
+jobs:
+  continuous-deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Build and tag docker image
+      id: build-image
+      uses: docker/build-push-action@v3
+      env:
+        AWS_ACCOUNT: ${{ secrets.SC_AWS_ACCOUNT }}
+        AWS-REGION: ${{ secrets.AWS_REGION }}
+        ECR_REPOSITORY: ${{ secrets.PROD_ECR_REPOSITORY }}
+      with:
+          context: ./api
+          file: ./api/Dockerfile
+          push: false
+          tags: |
+            cp-pluto-stage:dev-${{ github.sha }}
+            $AWS_ACCOUNT.dkr.ecr.$AWS-REGION.amazonaws.com/$ECR_REPOSITORY:latest
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Push image to Amazon ECR
+      id: push-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.PROD_ECR_REPOSITORY }}
+        IMAGE_TAG: dev-${{ github.sha }}
+      run: |
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

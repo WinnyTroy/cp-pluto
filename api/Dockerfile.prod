@@ -4,9 +4,13 @@ RUN mkdir -p /usr/src/ms-sunculture-api
 
 WORKDIR /usr/src/ms-sunculture-api
 
-COPY .env .
-
 COPY . .
+
+# Remove staging env file
+RUN rm .env
+
+# Make use of prod env file
+COPY .env.prod ./.env
 
 RUN npm config set unsafe-perm true
 

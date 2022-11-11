@@ -1,0 +1,80 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CI
+
+on:
+  push:
+    branches: [develop]
+
+  pull_request:
+    types: [opened, closed]
+    branches: [develop]
+
+jobs:
+  CI:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        working-directory: ./api
+        run: npm install
+
+      # - name: Run Linting
+      #   working-directory: ./api
+      #   run: npm run lint
+
+      # - name: Run Tests
+      #   working-directory: ./api
+      #   run: npm run test
+
+  # Deploy to test environment when PR is merged into develop
+  Deploy-to-Test-env:
+    needs: CI
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.STAGE_AWS_REGION }}
+
+      - name: Build and tag docker image
+        id: build-image
+        uses: docker/build-push-action@v3
+        with:
+            context: ./api
+            file: ./api/Dockerfile
+            push: false
+            tags: |
+              cp-pluto-stage:latest
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Push image to Amazon ECR
+        id: push-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.STAGE_ECR_REPOSITORY }}
+          IMAGE_TAG: dev-${{ github.sha }}
+        run: |
+          docker tag cp-pluto-stage:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
